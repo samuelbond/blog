@@ -1,0 +1,1 @@
+<h1>Simple MVC Framework v2.0</h1>
