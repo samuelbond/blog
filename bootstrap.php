@@ -44,3 +44,5 @@ require_once $composerAutoloader;
  */
 
 define('APPLICATION_ENV', "development"); // Could be development or production
+ini_set('display_errors',1);
+error_reporting(E_ALL);

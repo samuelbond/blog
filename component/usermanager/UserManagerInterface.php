@@ -13,11 +13,11 @@ interface UserManagerInterface {
 
     public function loginUser(User $user);
 
-    public function isUserLoggedIn(User $user);
+    public function isUserLoggedIn(User $user = null);
 
     public function isUserAllowedToPerformAction($action, User $user);
 
-    public function logOutUser(User $user);
+    public function logOutUser();
 
     public function getUser(User $user);
 
@@ -26,5 +26,7 @@ interface UserManagerInterface {
     public function createNewUser(User $user);
 
     public function editUser(User $user);
+
+    public function getCurrentSessionUserId();
 
 } 

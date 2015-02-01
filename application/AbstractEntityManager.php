@@ -24,12 +24,13 @@ class AbstractEntityManager {
     private   $dbName      = "my_database";
     private   $dbUser      = "root";
     private   $dbDriver    = "pdo_mysql";
-    private   $dbPassword  = "";
+    private   $dbPassword  = "root";
     private   $dbHost      = "localhost";
     private   $dbPort      = 3307;
     private   $entityPath  = null;
     private   $proxyPath   = null;
     private   $proxyNamespace  = null;
+    private   $entityNamespace  = null;
 
     /**
      * Creates the entity manager
@@ -58,7 +59,8 @@ class AbstractEntityManager {
         // Proxy Configuration
         $config->setProxyDir($this->getProxyPath());
         $config->setProxyNamespace($this->getProxyNameSpace());
-        $config->setAutoGenerateProxyClasses((APPLICATION_ENV == "development"));
+        //$config->setAutoGenerateProxyClasses((APPLICATION_ENV == "development"));
+        $config->setAutoGenerateProxyClasses(false);
 
         // Mapping Configuration
         //$driverImpl = new Doctrine\ORM\Mapping\Driver\XmlDriver(__DIR__."/config/mappings/xml");
@@ -80,11 +82,11 @@ class AbstractEntityManager {
         $entityManager = \Doctrine\ORM\EntityManager::create($this->getDbParam(), $config, $evm);
 
         // For generating entities From database
-        //$entityManager->getConfiguration()->setMetadataDriverImpl(new \Doctrine\ORM\Mapping\Driver\DatabaseDriver(
-        //   $entityManager->getConnection()->getSchemaManager()
-       // ));
-        //$cmf = new \Doctrine\ORM\Tools\DisconnectedClassMetadataFactory();
-       // $cmf->setEntityManager($entityManager);
+//        $entityManager->getConfiguration()->setMetadataDriverImpl(new \Doctrine\ORM\Mapping\Driver\DatabaseDriver(
+//           $entityManager->getConnection()->getSchemaManager()
+//        ));
+//        $cmf = new \Doctrine\ORM\Tools\DisconnectedClassMetadataFactory();
+//        $cmf->setEntityManager($entityManager);
 
         return $entityManager;
     }
@@ -133,7 +135,7 @@ class AbstractEntityManager {
             return $this->proxyPath;
         }
 
-        return array(_SITE_PATH."model".DIRECTORY_SEPARATOR."entities".DIRECTORY_SEPARATOR."proxy");
+        return _SITE_PATH."model".DIRECTORY_SEPARATOR."entities".DIRECTORY_SEPARATOR."proxy";
     }
 
     /**
@@ -149,6 +151,22 @@ class AbstractEntityManager {
 
         return 'model\entities\proxy';
     }
+
+
+    /**
+     * Gets the namespace of entity proxies
+     * @return null|array
+     */
+    public function getEntityNameSpace()
+    {
+        if(!is_null($this->entityNamespace))
+        {
+            return $this->entityNamespace;
+        }
+
+        return array('model\entities');
+    }
+
 
     /**
      * @param string $dbDriver

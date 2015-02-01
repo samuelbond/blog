@@ -132,5 +132,18 @@ class User {
         return $this->userType;
     }
 
+    public function hashPassword()
+    {
+        $options = [
+            'cost' => 12,
+        ];
+        $this->password = password_hash($this->password, PASSWORD_BCRYPT, $options);
+    }
+
+    public function useDefaultProfilePicture()
+    {
+        $this->profilePicture = "view".DIRECTORY_SEPARATOR."profile-pictures".DIRECTORY_SEPARATOR."default.png";
+    }
+
 
 } 

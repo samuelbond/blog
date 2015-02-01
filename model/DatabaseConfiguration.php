@@ -23,8 +23,8 @@ class DatabaseConfiguration {
             "host"          => "localhost",
             "port"          =>  "3307",
             "username"      => "root",
-            "password"      => "",
-            "database"      => "my_database_name",
+            "password"      => "root",
+            "database"      => "blog",
             "charset"       => "latin1",
         ),
 

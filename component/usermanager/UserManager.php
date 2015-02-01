@@ -11,6 +11,7 @@ namespace component\usermanager;
 
 use application\AbstractComponent;
 use application\AbstractComponentInjector;
+use component\usermanager\version\v1\UserManagerVersion1;
 
 class UserManager extends AbstractComponent{
     /**
@@ -21,7 +22,7 @@ class UserManager extends AbstractComponent{
         switch($this->currentVersion)
         {
             case "1.0":
-                self::$instance = new version1AdvertTransformer();
+                self::$instance = new UserManagerVersion1();
                 break;
             default:
                 self::$instance = $this;
@@ -32,7 +33,7 @@ class UserManager extends AbstractComponent{
     /**
      * Returns an instance of the component
      * @param AbstractComponentInjector $componentInjector
-     * @return null|$this
+     * @return null|$this|\component\usermanager\version\v1\UserManagerVersion1
      */
     public function getInstance(AbstractComponentInjector $componentInjector)
     {

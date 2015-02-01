@@ -29,7 +29,8 @@ class EntityManager implements BaseEntityManager{
     {
         if(!EntityManager::$entityManagerInstance)
         {
-            self::$entityManagerInstance = self::reconfigure()->createEntityManager();
+            $em = new EntityManager();
+            self::$entityManagerInstance = $em->reconfigure()->createEntityManager();
             return self::$entityManagerInstance;
         }
 
