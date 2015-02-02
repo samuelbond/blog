@@ -31,6 +31,13 @@ abstract class BlogDAO extends AbstractDAO{
     public abstract function insertNewBlogEntry(BlogEntry $blogEntry);
 
     /**
+     * Create a new blog entry category
+     * @param BlogCategory $category
+     * @return mixed
+     */
+    public abstract function insertNewBlogEntryCategory(BlogCategory $category);
+
+    /**
      * Searches for blog entries based on members which are set
      * @param BlogEntry $blogEntry
      * @return array
@@ -99,6 +106,12 @@ abstract class BlogDAO extends AbstractDAO{
      * @return BlogCategory
      */
     public abstract function getEntryCategory(BlogCategory $category);
+
+    /**
+     * Gets all category
+     * @return array
+     */
+    public abstract function getAllEntryCategory();
 
 
 } 

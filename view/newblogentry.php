@@ -81,7 +81,7 @@
                                 <h3><span>New Blog Entry</span></h3>
                             </div>
 
-                            <form method="post" action="#" enctype="multipart/form-data">
+                            <form method="post" action="newblogentry" enctype="multipart/form-data">
                                 <div class="rptable table-responsive">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Blog Entry Title</label>
@@ -95,7 +95,12 @@
                                     <div class="form-group">
                                         <label for="exampleInputProfilePicture">Blog Entry Category</label>
                                         <select class="form-control" name="category">
-                                            <option>Category 1</option>
+                                            <?php
+                                                foreach($categories as $category)
+                                                {
+                                                    echo '<option value="'.$category['id'].'">'.$category['category'].'</option>';
+                                                }
+                                            ?>
                                         </select>
                                     </div>
 
@@ -105,7 +110,7 @@
                                     </div>
 
                                 </div>
-                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                    <button type="submit" class="btn btn-primary">Save changes</button>
                             </form>
 
                         </div>

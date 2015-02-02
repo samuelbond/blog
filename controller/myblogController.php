@@ -11,6 +11,7 @@ namespace controller;
 
 use application\BaseController;
 use component\blog\Blog;
+use component\blog\BlogCategory;
 use component\blog\BlogInjector;
 use component\usermanager\User;
 use component\usermanager\UserManager;
@@ -52,6 +53,17 @@ class myblogController extends BaseController{
                 if(isset($_POST['new_category']))
                 {
                     $category = $_POST['new_category'];
+                    $newCategory = new BlogCategory();
+                    $newCategory->setCategory($category);
+
+                    if($blog->createNewCategory($newCategory))
+                    {
+                        $this->registry->template->success = "The New Category was successfully created";
+                    }
+                    else
+                    {
+                        $this->registry->template->error = "There was an error while trying to create the new category";
+                    }
                 }
             }
 

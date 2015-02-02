@@ -29,7 +29,8 @@ class DoctrineDAO extends BlogDAO{
     public function insertNewBlogEntry(BlogEntry $blogEntry)
     {
         $newBlogEntry = new \model\entities\BlogEntry();
-        $newBlogEntry->setEntryId($this->randomAlphaNumericGenerator(10));
+        $id = $this->randomAlphaNumericGenerator(10);
+        $newBlogEntry->setEntryId($id);
         $newBlogEntry->setEntryTitle($blogEntry->getEntryTitle());
         $category = new BlogCategory();
         $category->setCategoryId($blogEntry->getEntryCategory());
@@ -40,10 +41,12 @@ class DoctrineDAO extends BlogDAO{
         $newBlogEntry->setEntryCover($blogEntry->getEntryCover());
         $newBlogEntry->setDateCreated(new \DateTime());
 
+
         try
         {
 
             $this->entityManager->persist($newBlogEntry);
+            $newBlogEntry->setEntryId($id);
             $this->entityManager->flush();
             return true;
         }catch (\Exception $ex)
@@ -173,6 +176,44 @@ class DoctrineDAO extends BlogDAO{
        }
     }
 
+    /**
+     * Create a new blog entry category
+     * @param BlogCategory $category
+     * @return mixed
+     */
+    public function insertNewBlogEntryCategory(BlogCategory $category)
+    {
+        $newCategory = new BlogEntryCategory();
+        $newCategory->setCategory($category->getCategory());
+
+        try
+        {
+
+            $this->entityManager->persist($newCategory);
+            $this->entityManager->flush();
+            return true;
+        }catch (\Exception $ex)
+        {
+            return false;
+        }
+    }
+
+    /**
+     * Gets all category
+     * @return array
+     */
+    public function getAllEntryCategory()
+    {
+        try
+        {
+            $objArray = $this->entityManager->getRepository("model\\entities\\BlogEntryCategory")->findAll();
+            return $this->rearrangeCategories($objArray);
+        }catch (\Exception $ex)
+        {
+            return array();
+        }
+    }
+
 
     public function randomAlphaNumericGenerator($length)
     {
@@ -193,6 +234,25 @@ class DoctrineDAO extends BlogDAO{
             }
         }
         return $random_generator;
+    }
+
+
+    protected function rearrangeCategories($categoryEntityArray)
+    {
+        $result = array();
+
+        if(is_array($categoryEntityArray) && sizeof($categoryEntityArray) > 0)
+        {
+            foreach($categoryEntityArray as $category)
+            {
+                $result[] = array(
+                    "id" => $category->getId(),
+                    "category" => $category->getCategory(),
+                );
+            }
+        }
+
+        return $result;
     }
 
 } 

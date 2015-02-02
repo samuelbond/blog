@@ -10,6 +10,7 @@ namespace component\blog\version\v1;
 
 
 use component\blog\Blog;
+use component\blog\BlogCategory;
 use component\blog\BlogComment;
 use component\blog\BlogEntry;
 use component\blog\BlogInterface;
@@ -44,6 +45,21 @@ class BlogVersion1 extends Blog implements BlogInterface{
     public function publishComment(BlogComment $comment)
     {
         // TODO: Implement publishComment() method.
+    }
+
+    public function createNewCategory(BlogCategory $category)
+    {
+        return $this->dao->insertNewBlogEntryCategory($category);
+    }
+
+    public function getAllCategories()
+    {
+        return $this->dao->getAllEntryCategory();
+    }
+
+    public function getAllBlogEntries()
+    {
+        // TODO: Implement getAllBlogEntries() method.
     }
 
 

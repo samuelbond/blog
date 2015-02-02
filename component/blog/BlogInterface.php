@@ -23,4 +23,12 @@ interface BlogInterface {
 
     public function publishComment(BlogComment $comment);
 
+    public function createNewCategory(BlogCategory $category);
+
+    public function getAllCategories();
+
+    public function getAllBlogEntries();
+
+
+
 } 

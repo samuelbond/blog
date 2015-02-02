@@ -172,7 +172,7 @@
                 <h4 class="modal-title" id="myModalLabel">New Blog Category</h4>
             </div>
             <div class="modal-body">
-                <form method="post" action="#" enctype="multipart/form-data">
+                <form method="post" action="myblog" >
                     <div class="rptable table-responsive">
                         <div class="form-group">
                             <label for="exampleInputEmail1">Blog Entry Category</label>
@@ -183,7 +183,7 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Create New Category</button>
+                <button type="submit" class="btn btn-primary">Create New Category</button>
                 </form>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
