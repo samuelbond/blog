@@ -76,7 +76,7 @@
                             <br />
                             <div class="block-heading-two">
                                 <h3><span>All Users</span></h3>
-                                <small style="color:red;">Fill in Fields you want to update only</small>
+                                <small style="color:red;">Activate, Block and Delete User Accounts</small>
                             </div>
 
                             <div class="rptable table-responsive">
@@ -93,39 +93,35 @@
                                     </thead>
                                     <!-- Table Body -->
                                     <tbody>
-                                    <tr>
-                                        <td><a href="#">John Doe</a></td>
-                                        <td>john@yahoo.com</td>
-                                        <td>Not Activated</td>
-                                        <td>1 February 2015</td>
+
+                                    <?php
+                                        foreach($allUsers as $users)
+                                        {
+                                            echo '
+                                             <tr>
+                                        <td><a href="#">'.$users['fullname'].'</a></td>
+                                        <td>'.$users['email'].'</td>
+                                        <td>'.(($users['status'] == 0) ? "Not Activated" : (($users['status'] == 2) ? "Account Blocked" : (($users['status'] == 3) ? "Account Deleted" : "Activated"))).'</td>
+                                        <td>'.$users['date_created'].'</td>
                                         <td>
-                                            <a href="#" data-toggle="tooltip" title="Activate User"><span style="color:green;" class="fa fa-check"></span></a>
+                                            <a href="#" onclick=\'postData("activate", '.$users['userid'].')\' data-toggle="tooltip" title="Activate User"><span style="color:green;" class="fa fa-check"></span></a>
                                             <br />
-                                            <a href="#" data-toggle="tooltip" title="Deactivate User"><span style="color:orange;" class="fa fa-remove"></span></a>
+                                            <a href="#" onclick=\'postData("deactivate", '.$users['userid'].')\' data-toggle="tooltip" title="Deactivate User"><span style="color:orange;" class="fa fa-remove"></span></a>
                                             <br />
-                                            <a href="#" data-toggle="tooltip" title="Delete User"><span style="color:#ff0000;" class="fa fa-minus"></span></a>
+                                            <a href="#" onclick=\'postData("delete", '.$users['userid'].')\' data-toggle="tooltip" title="Delete User"><span style="color:#ff0000;" class="fa fa-minus"></span></a>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td><a href="#">John Smith</a></td>
-                                        <td>smith@yahoo.com</td>
-                                        <td>Not Activated</td>
-                                        <td>1 February 2015</td>
-                                        <td>
-                                            <a href="#" data-toggle="tooltip" title="Activate User"><span style="color:green;" class="fa fa-check"></span></a>
-                                            <br />
-                                            <a href="#" data-toggle="tooltip" title="Deactivate User"><span style="color:orange;" class="fa fa-remove"></span></a>
-                                            <br />
-                                            <a href="#" data-toggle="tooltip" title="Delete User"><span style="color:#ff0000;" class="fa fa-minus"></span></a>
-                                        </td>
-                                    </tr>
+                                            ';
+                                        }
+                                    ?>
+
                                     </tbody>
                                 </table>
                             </div>
 
                             <!-- Pagination -->
                             <div class="shopping-pagination">
-                                <ul class="pagination">
+                                <ul class="pagination" >
                                     <li class="disabled"><a href="#">&laquo;</a></li>
                                     <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
                                     <li><a href="#">2</a></li>

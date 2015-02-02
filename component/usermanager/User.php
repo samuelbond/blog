@@ -17,6 +17,7 @@ class User {
     private $email;
     private $userType;
     private $profilePicture;
+    private $status;
 
     /**
      * @param mixed $userId
@@ -143,6 +144,22 @@ class User {
     public function useDefaultProfilePicture()
     {
         $this->profilePicture = "view".DIRECTORY_SEPARATOR."profile-pictures".DIRECTORY_SEPARATOR."default.png";
+    }
+
+    /**
+     * @param mixed $status
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStatus()
+    {
+        return $this->status;
     }
 
 

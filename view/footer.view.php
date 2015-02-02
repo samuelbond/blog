@@ -131,12 +131,19 @@
 
 <!-- Custom JS. Type your JS code in custom.js file -->
 <script src="view/js/custom.js"></script>
-
+<form id="form" method="POST" style="display:none">
+</form>
 <script>
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
     })
+    function postData(attrName,attrValue){
+       var input  = $('<input/>',{type:'hidden',name:attrName,value:attrValue});
+        $('#form').append(input).submit();
+    }
 </script>
+
+
 
 <!--
 Style switcher. This is just for demo purpose only.

@@ -94,7 +94,14 @@ class UserManagerVersion1 extends UserManager implements UserManagerInterface {
 
     public function getAllUsers()
     {
-        // TODO: Implement getAllUsers() method.
+        $result = $this->dao->getAllUsers();
+
+        if(is_null($result) || (is_array($result) && sizeof($result) < 1))
+        {
+            return array();
+        }
+
+        return $result;
     }
 
     public function createNewUser(User $user)

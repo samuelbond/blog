@@ -93,5 +93,12 @@ abstract class BlogDAO extends AbstractDAO{
      */
     public abstract function publishBlogEntry(BlogEntry $blogEntry);
 
+    /**
+     * Gets a category
+     * @param BlogCategory $category
+     * @return BlogCategory
+     */
+    public abstract function getEntryCategory(BlogCategory $category);
+
 
 } 

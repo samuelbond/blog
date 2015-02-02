@@ -38,6 +38,7 @@ class DoctrineDAO extends UserManagerDAO{
         $newUser->setProfilePicture($user->getProfilePicture());
         $type = $this->getUserType(1);
         $newUser->setUserType($type);
+        $newUser->setDateCreated(new \DateTime());
 
         try
         {
@@ -91,6 +92,11 @@ class DoctrineDAO extends UserManagerDAO{
         if($user->getFullName() !== null)
         {
             $userEntity->setFullName($user->getFullName());
+        }
+
+        if($user->getStatus() !== null)
+        {
+            $userEntity->setStatus($user->getStatus());
         }
 
         try
@@ -194,7 +200,16 @@ class DoctrineDAO extends UserManagerDAO{
      */
     public function getAllUsers()
     {
-        // TODO: Implement getAllUsers() method.
+        try
+        {
+            $obj = $this->entityManager->getRepository("model\\entities\\Users")->findAll();
+            return $this->reArrangeEntityArray($obj);
+        }
+        catch(\Exception $ex)
+        {
+            echo $ex->getMessage();
+            return array();
+        }
     }
 
     /**
@@ -205,6 +220,28 @@ class DoctrineDAO extends UserManagerDAO{
         $this->entityManager = $entityManager;
     }
 
+
+    protected function reArrangeEntityArray(array $entityArray)
+    {
+        $result = array();
+
+        if(sizeof($entityArray) > 0)
+        {
+            foreach($entityArray as $userEntity)
+            {
+                $result[] = array(
+                    "fullname" => $userEntity->getFullname(),
+                    "userid" => $userEntity->getUserId(),
+                    "email" => $userEntity->getEmail(),
+                    "status" => $userEntity->getStatus(),
+                    "date_created" => $userEntity->getDateCreated()->format('g:ia \o\n l jS F Y'),
+                );
+            }
+        }
+
+        return $result;
+
+    }
 
 
 

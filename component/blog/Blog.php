@@ -11,6 +11,7 @@ namespace component\blog;
 
 use application\AbstractComponent;
 use application\AbstractComponentInjector;
+use component\blog\version\v1\BlogVersion1;
 
 class Blog extends AbstractComponent{
 
@@ -22,7 +23,7 @@ class Blog extends AbstractComponent{
         switch($this->currentVersion)
         {
             case "1.0":
-                self::$instance = new version1AdvertTransformer();
+                self::$instance = new BlogVersion1();
                 break;
             default:
                 self::$instance = $this;
@@ -33,7 +34,7 @@ class Blog extends AbstractComponent{
     /**
      * Returns an instance of the component
      * @param AbstractComponentInjector $componentInjector
-     * @return null|$this
+     * @return null|$this|\component\blog\version\v1\BlogVersion1
      */
     public function getInstance(AbstractComponentInjector $componentInjector)
     {

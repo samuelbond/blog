@@ -16,6 +16,7 @@ class BlogEntry {
     private $entryDate;
     private $entryAuthor;
     private $entryCategory;
+    private $entryCover;
     private $entry;
     private $entryComments;
 
@@ -129,6 +130,22 @@ class BlogEntry {
     public function getEntryCategory()
     {
         return $this->entryCategory;
+    }
+
+    /**
+     * @param mixed $entryCover
+     */
+    public function setEntryCover($entryCover)
+    {
+        $this->entryCover = $entryCover;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEntryCover()
+    {
+        return $this->entryCover;
     }
 
 
