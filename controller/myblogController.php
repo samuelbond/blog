@@ -10,11 +10,56 @@ namespace controller;
 
 
 use application\BaseController;
+use component\blog\Blog;
+use component\blog\BlogInjector;
+use component\usermanager\User;
+use component\usermanager\UserManager;
+use component\usermanager\UserManagerInjector;
 
 class myblogController extends BaseController{
 
     public function index()
     {
+        $currentAction = "MANAGE_BLOG";
+        $this->setPageTitle("My Blog");
+        $injector = new UserManagerInjector();
+        $userManager = (new UserManager())->getInstance($injector);
+        if($userManager->isUserLoggedIn())
+        {
+            $user = new User();
+            $user->setUserId($userManager->getCurrentSessionUserId());
+            $profile = $userManager->getUser($user);
+            $blogInjector = new BlogInjector();
+            $blog = (new Blog())->getInstance($blogInjector);
 
+            if($this->isPOSTRequest())
+            {
+                if(isset($_POST['new_category']))
+                {
+                    $currentAction = "MANAGE_ALL_BLOG";
+                }
+            }
+
+            if($userManager->isUserAllowedToPerformAction($currentAction, $profile) === false)
+            {
+                $this->actionIsNotAllowed();
+                $this->registry->template->loadView("content");
+                return;
+            }
+
+            if($this->isPOSTRequest())
+            {
+                if(isset($_POST['new_category']))
+                {
+                    $category = $_POST['new_category'];
+                }
+            }
+
+            $this->registry->template->profile = $profile;
+            $this->registry->template->loadView("myblog");
+            return;
+        }
+
+        header("Location: signin?profile=false");
     }
 } 

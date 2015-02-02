@@ -18,7 +18,7 @@ class BlogVersion1 extends Blog implements BlogInterface{
 
     public function createNewBlogEntry(BlogEntry $entry)
     {
-        // TODO: Implement createNewBlogEntry() method.
+       return $this->dao->insertNewBlogEntry($entry);
     }
 
     public function getBlogEntry(BlogEntry $entry)
