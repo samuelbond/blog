@@ -44,6 +44,7 @@ class signinController extends BaseController{
             else
             {
                 header("Location: profile");
+                return;
             }
         }
 

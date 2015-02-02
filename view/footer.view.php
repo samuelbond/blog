@@ -59,14 +59,12 @@
                     <!-- Foot Item Content -->
                     <div class="foot-item-content address">
                         <!-- Heading -->
-                        <h6 class="bold"><i class="fa fa-home"></i>&nbsp;&nbsp;Hanks Ltd</h6>
+                        <h6 class="bold"><i class="fa fa-home"></i>&nbsp;&nbsp;Team Hire</h6>
                         <!-- Paragraph -->
                         <p class="add">
-                            Bharathi Nagar, South Cherry Road,<br />
-                            North Bangalore - 535089.</p>
-                        <p class="tel"> <i class="fa fa-phone"></i> Tel : + (833) - 839 8393<br />
-                            <i class="fa fa-envelope"></i>  Mail : <a href="#">infodesk@uk.com</a><br />
-                            <i class="fa fa-calendar"></i> Business Hours : 9:30 - 5:30</p>
+                            London, United Kingdom</p>
+                        <p class="tel"> <i class="fa fa-phone"></i> Tel : + (07) - 818 210052<br />
+                            <i class="fa fa-envelope"></i>  Mail : <a href="#">info@teamhire.co.uk</a><br />
                     </div>
                 </div>
             </div>
@@ -85,7 +83,7 @@
     <div class="container">
         <!-- Footer Content -->
         <!-- Paragraph -->
-        <p class="pull-left">Copyright &copy; 2014 - <a href="#">Your Site</a></p>
+        <p class="pull-left">Copyright &copy; 2014 - <a href="#">Team Hire</a></p>
         <ul class="list-inline pull-right">
             <!-- List -->
             <li><a href="index.html">Home</a><li>

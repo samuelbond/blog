@@ -103,6 +103,7 @@ class manageprofileController extends BaseController{
             }
             $this->registry->template->profile = $profile;
             $this->registry->template->loadView("manageprofile");
+            return;
         }
 
         header("Location: signin?profile=false");

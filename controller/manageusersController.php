@@ -46,6 +46,7 @@ class manageusersController extends BaseController{
             }
             $this->registry->template->profile = $profile;
             $this->registry->template->loadView("manageusers");
+            return;
         }
 
         header("Location: signin?profile=false");

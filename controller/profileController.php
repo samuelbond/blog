@@ -42,6 +42,7 @@ class profileController extends BaseController{
             }
             $this->registry->template->profile = $profile;
             $this->registry->template->loadView("profile");
+            return;
         }
 
         header("Location: signin?profile=false");

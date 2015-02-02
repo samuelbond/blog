@@ -59,8 +59,8 @@ class AbstractEntityManager {
         // Proxy Configuration
         $config->setProxyDir($this->getProxyPath());
         $config->setProxyNamespace($this->getProxyNameSpace());
-        //$config->setAutoGenerateProxyClasses((APPLICATION_ENV == "development"));
-        $config->setAutoGenerateProxyClasses(false);
+        $config->setAutoGenerateProxyClasses((APPLICATION_ENV == "development"));
+        //$config->setAutoGenerateProxyClasses(false);
 
         // Mapping Configuration
         //$driverImpl = new Doctrine\ORM\Mapping\Driver\XmlDriver(__DIR__."/config/mappings/xml");
@@ -82,11 +82,13 @@ class AbstractEntityManager {
         $entityManager = \Doctrine\ORM\EntityManager::create($this->getDbParam(), $config, $evm);
 
         // For generating entities From database
-//        $entityManager->getConfiguration()->setMetadataDriverImpl(new \Doctrine\ORM\Mapping\Driver\DatabaseDriver(
-//           $entityManager->getConnection()->getSchemaManager()
-//        ));
-//        $cmf = new \Doctrine\ORM\Tools\DisconnectedClassMetadataFactory();
-//        $cmf->setEntityManager($entityManager);
+        $driverDb = new \Doctrine\ORM\Mapping\Driver\DatabaseDriver(
+            $entityManager->getConnection()->getSchemaManager()
+        );
+        $driverDb->setNamespace("model\\entities\\");
+        $entityManager->getConfiguration()->setMetadataDriverImpl($driverDb);
+        $cmf = new \Doctrine\ORM\Tools\DisconnectedClassMetadataFactory();
+        $cmf->setEntityManager($entityManager);
 
         return $entityManager;
     }
