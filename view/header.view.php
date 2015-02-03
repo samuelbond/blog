@@ -115,19 +115,12 @@
 <div class="col-md-4">
     <!-- Logo section -->
     <div class="logo">
-        <h1><a href="#"><i class="fa fa-laptop"></i> Team Hire Blog</a></h1>
+        <h1><a href="index"><i class="fa fa-laptop"></i> Team Hire Blog</a></h1>
     </div>
 </div>
 <div class="col-md-9">
 
-<!-- Navigation starts.  -->
-<div class="navy">
-    <ul>
-        <!-- Main menu -->
-        <li><a href="index">Blog Home</a></li>
-    </ul>
-</div>
-<!-- Navigation ends -->
+
 
 </div>
 
