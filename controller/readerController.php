@@ -43,7 +43,7 @@ class readerController extends BaseController{
             $content = $_GET['entry'];
             $blogEntry = new BlogEntry();
             $blogEntry->setId($content);
-
+            $this->registry->template->categories = $blog->getAllCategories();
             $this->registry->template->entry = $blog->getBlogEntry($blogEntry);
             $this->registry->template->reader = $this;
             $this->registry->template->profile = $profile;
