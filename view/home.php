@@ -18,23 +18,28 @@
 					<div class="blog-masonry">
 					
 						<!-- Grid Item - Image, Heading and Para -->
-						<div class="item">
+
+
+                        <?php
+                        foreach($allBlog as $blog)
+                        {
+                            echo '<div class="item">
 							<!-- Entry for each grid -->
 							<div class="grid-entry">
 								<!-- Grid Image Container -->
 								<div class="grid-img">
 									<!-- Image -->
-									<img src="view/img/gallery/small/1.jpg" class="img-responsive" alt="" />
+									<img src="'.$blog['cover'].'" class="img-responsive" alt="" />
 									<!-- Grid Image Hover Effect -->
 									<span class="grid-img-hover"></span>
-									<a href="view/img/gallery/small/1.jpg" class="lightbox">
+									<a href="'.$blog['cover'].'" class="lightbox">
 										<i class="fa fa-search hover-icon"></i>
 									</a>
 								</div>
 								<!-- Grid entry information -->
 								<div class="entry-info">
 									<!-- Heading -->
-									<h4><a href="#">Donec ultres lectus ut consequat lectus sees scelerisque</a></h4>
+									<h4><a href="#">'.$blog['title'].'</a></h4>
 									<div class="bor"></div>
 									<!-- Paragraph -->
 									<p>Studious update veldt sees veldt sees quad quad nil molest. Lorem ipsum dolor sit amet, consectetu.</p>
@@ -42,6 +47,11 @@
 								</div>
 							</div>
 						</div>
+                        ';
+                        }
+
+
+                        ?>
 						
 						
 						<!-- Grid Item - Video, Heading and Para -->

@@ -161,7 +161,15 @@ class DoctrineDAO extends BlogDAO{
      */
     public function getAllBlogEntry()
     {
-        // TODO: Implement getAllBlogEntry() method.
+        try
+        {
+            $result = $this->entityManager->getRepository("model\\entities\\BlogEntry")->findBy(array("status" => 1));
+            return $this->rearrangeBlogEntry($result);
+        }catch (\Exception $ex)
+        {
+            echo "exception ; ".$ex->getMessage();
+            return array();
+        }
     }
 
     /**

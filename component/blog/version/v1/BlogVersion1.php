@@ -63,7 +63,7 @@ class BlogVersion1 extends Blog implements BlogInterface{
 
     public function getAllBlogEntries()
     {
-        // TODO: Implement getAllBlogEntries() method.
+        return $this->dao->getAllBlogEntry();
     }
 
     public function getAuthorsBlogEntries($author)
