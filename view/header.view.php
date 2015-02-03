@@ -124,7 +124,7 @@
 <div class="navy">
     <ul>
         <!-- Main menu -->
-        <li><a href="#">Blog Home</a></li>
+        <li><a href="index">Blog Home</a></li>
     </ul>
 </div>
 <!-- Navigation ends -->

@@ -16,7 +16,7 @@ class indexController extends BaseController{
     public function index(){
 
 
-        $this->registry->template->loadView("content");
+        $this->registry->template->loadView("home");
     }
 
 } 

@@ -129,6 +129,20 @@
 <!-- Ecommerce custom JS -->
 <script src="view/js/ecommerce.js"></script>
 
+<!-- Javascript for this page -->
+<!-- Imageloaded js-->
+<script src="view/js/imagesloaded.min.js"></script>
+<!-- Masonry JS -->
+<script src="view/js/masonry.js"></script>
+
+<script type="text/javascript">
+    // Initialize Masonry
+    var $box = $('.blog-masonry').masonry();
+    // Layout Masonry again after all images have loaded
+    $box.imagesLoaded( function() {
+        $box.masonry();
+    });
+</script>
 <!-- Custom JS. Type your JS code in custom.js file -->
 <script src="view/js/custom.js"></script>
 <form id="form" method="POST" style="display:none">
@@ -146,6 +160,7 @@
 
 <script src="view/highlight.pack.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
+
 
 <!--
 Style switcher. This is just for demo purpose only.
