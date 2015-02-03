@@ -108,9 +108,9 @@
                                                 <td>'.(($alert['status'] == 0) ? "Not Published" : (($alert['status'] == 2) ? "Deleted" : "Published")).'</td>
                                                 <td>'.$alert['date_created'].'</td>
                                                 <td>
-                                                <a href="#?publish='.$alert['entry_id'].'" data-toggle="tooltip" title="Publish"><span class="fa fa-print color"></span></a>
+                                                <a href="publishblog?publish='.$alert['entry_id'].'" data-toggle="tooltip" title="Publish"><span class="fa fa-print color"></span></a>
                                                 <br />
-                                                <a href="#" data-toggle="tooltip" title="Delete"><span class="fa fa-remove color"></span></a>
+                                                <a href="remove?publish='.$alert['entry_id'].'" data-toggle="tooltip" title="Delete"><span class="fa fa-remove color"></span></a>
                                                 </td>
                                             </tr>';
                                     }

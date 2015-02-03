@@ -201,7 +201,25 @@ class DoctrineDAO extends BlogDAO{
      */
     public function publishBlogEntry(BlogEntry $blogEntry)
     {
-        // TODO: Implement publishBlogEntry() method.
+        $this->getBlogEntry($blogEntry->getId());
+        $entry = $this->currentEntity;
+        $alert = $this->getAlert($entry);
+
+        if(!is_object($alert))
+        {
+            return false;
+        }
+        $alert->getEntry()->setStatus(1);
+        $alert->setStatus(1);
+        try
+        {
+            $this->entityManager->merge($alert);
+            $this->entityManager->flush();
+            return true;
+        }catch (\Exception $ex)
+        {
+            return false;
+        }
     }
 
 

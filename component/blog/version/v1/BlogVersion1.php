@@ -43,7 +43,7 @@ class BlogVersion1 extends Blog implements BlogInterface{
 
     public function publishBlogEntry(BlogEntry $entry)
     {
-        // TODO: Implement publishBlogEntry() method.
+        return $this->dao->publishBlogEntry($entry);
     }
 
     public function publishComment(BlogComment $comment)
