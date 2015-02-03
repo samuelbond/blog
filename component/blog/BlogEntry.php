@@ -10,15 +10,16 @@ namespace component\blog;
 
 
 class BlogEntry {
-
-    private $entryId;
-    private $entryTitle;
-    private $entryDate;
-    private $entryAuthor;
-    private $entryCategory;
-    private $entryCover;
-    private $entry;
-    private $entryComments;
+    private $id = null;
+    private $entryId = null;
+    private $entryTitle = null;
+    private $entryDate = null;
+    private $entryAuthor = null;
+    private $entryCategory = null;
+    private $entryCover = null;
+    private $entry = null;
+    private $entryComments = null;
+    private $entryStatus = null;
 
     /**
      * @param mixed $entry
@@ -146,6 +147,38 @@ class BlogEntry {
     public function getEntryCover()
     {
         return $this->entryCover;
+    }
+
+    /**
+     * @param int $entryStatus
+     */
+    public function setEntryStatus($entryStatus)
+    {
+        $this->entryStatus = $entryStatus;
+    }
+
+    /**
+     * @return int
+     */
+    public function getEntryStatus()
+    {
+        return $this->entryStatus;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 
 

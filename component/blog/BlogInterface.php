@@ -29,6 +29,12 @@ interface BlogInterface {
 
     public function getAllBlogEntries();
 
+    public function getAuthorsBlogEntries($author);
+
+    public function getAllBlogEntryAwaitingPublish();
+
+    public function createANewPublishRequest(BlogEntry $blogEntry);
+
 
 
 } 

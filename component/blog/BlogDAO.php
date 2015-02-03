@@ -113,5 +113,24 @@ abstract class BlogDAO extends AbstractDAO{
      */
     public abstract function getAllEntryCategory();
 
+    /**
+     * Gets all blog entries belonging to a given author
+     * @param $author
+     * @return array
+     */
+    public abstract function getAllBlogEntriesBelongingToAuthor($author);
+    /**
+     * Gets all blog entries with a publish request
+     * @return array
+     */
+    public abstract function getAllBlogToPublish();
+
+    /**
+     *  Save a new Publish Request for a given blog entry
+     * @param BlogEntry $blogEntry
+     * @return bool
+     */
+    public abstract function insertPublishRequest(BlogEntry $blogEntry);
+
 
 } 

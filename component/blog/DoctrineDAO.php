@@ -9,8 +9,10 @@
 namespace component\blog;
 
 
+use application\Template;
 use component\blog\BlogEntry;
 use model\entities\BlogEntryCategory;
+use model\entities\PublishAlerts;
 
 class DoctrineDAO extends BlogDAO{
 
@@ -46,7 +48,6 @@ class DoctrineDAO extends BlogDAO{
         {
 
             $this->entityManager->persist($newBlogEntry);
-            $newBlogEntry->setEntryId($id);
             $this->entityManager->flush();
             return true;
         }catch (\Exception $ex)
@@ -54,6 +55,25 @@ class DoctrineDAO extends BlogDAO{
             return false;
         }
     }
+
+    /**
+     * Gets all blog entries belonging to a given author
+     * @param $author
+     * @return array
+     */
+    public function getAllBlogEntriesBelongingToAuthor($author)
+    {
+        try
+        {
+            $result = $this->entityManager->getRepository("model\\entities\\BlogEntry")->findBy(array("entryAuthor" => $author));
+            return $this->rearrangeBlogEntry($result);
+        }catch (\Exception $ex)
+        {
+            echo "exception ; ".$ex->getMessage();
+            return array();
+        }
+    }
+
 
     /**
      * Searches for blog entries based on members which are set
@@ -72,7 +92,25 @@ class DoctrineDAO extends BlogDAO{
      */
     public function getBlogEntry($blogEntryId)
     {
-        // TODO: Implement getBlogEntry() method.
+        try
+        {
+            $result = $this->entityManager->find("model\\entities\\BlogEntry", $blogEntryId);
+            $entry = new BlogEntry();
+            $entry->setEntryId($result->getEntryId());
+            $entry->setId($result->getId());
+            $entry->setEntry($result->getEntry());
+            $entry->setEntryCover($result->getEntryCover());
+            $entry->setEntryTitle($result->getEntryTitle());
+            $entry->setEntryAuthor($result->getEntryAuthor());
+            $entry->setEntryCategory($result->getEntryCategory());
+            $entry->setEntryStatus($result->getStatus());
+            $entry->setEntryDate($result->getDateCreated()->format('l jS F Y'));
+            $this->currentEntity = $result;
+            return $entry;
+        }catch (\Exception $ex)
+        {
+            return null;
+        }
     }
 
     /**
@@ -82,7 +120,28 @@ class DoctrineDAO extends BlogDAO{
      */
     public function modifyBlogEntry(BlogEntry $blogEntry)
     {
-        // TODO: Implement modifyBlogEntry() method.
+        $this->getBlogEntry($blogEntry->getId());
+        $entry = $this->currentEntity;
+        try
+        {
+            if(!is_null($blogEntry->getEntryStatus()))
+            {
+                $entry->setStatus($blogEntry->getEntryStatus());
+            }
+            else
+            {
+                $entry->setEntryTitle($blogEntry->getEntryTitle());
+                $entry->setEntry($blogEntry->getEntry());
+            }
+
+            $this->entityManager->merge($entry);
+            $this->entityManager->flush();
+            return true;
+        }catch (\Exception $ex)
+        {
+            return false;
+        }
+
     }
 
     /**
@@ -199,6 +258,35 @@ class DoctrineDAO extends BlogDAO{
     }
 
     /**
+     *  Save a new Publish Request for a given blog entry
+     * @param BlogEntry $blogEntry
+     * @return bool
+     */
+    public function insertPublishRequest(BlogEntry $blogEntry)
+    {
+        $this->getBlogEntry($blogEntry->getId());
+        $entry = $this->currentEntity;
+        if(is_object($this->getAlert($entry)))
+        {
+            return true;
+        }
+        $alert = new PublishAlerts();
+        $alert->setStatus(0);
+        $alert->setEntry($entry);
+
+        try
+        {
+            $this->entityManager->persist($alert);
+            $this->entityManager->flush();
+            return true;
+        }catch (\Exception $ex)
+        {
+            return false;
+        }
+    }
+
+
+    /**
      * Gets all category
      * @return array
      */
@@ -208,6 +296,38 @@ class DoctrineDAO extends BlogDAO{
         {
             $objArray = $this->entityManager->getRepository("model\\entities\\BlogEntryCategory")->findAll();
             return $this->rearrangeCategories($objArray);
+        }catch (\Exception $ex)
+        {
+            return array();
+        }
+    }
+
+    /**
+     * Gets all blog entries with a publish request
+     * @return array
+     */
+    public function getAllBlogToPublish()
+    {
+        try
+        {
+            $objArray = $this->entityManager->getRepository("model\\entities\\PublishAlerts")->findBy(array("status" => 0));
+            return $this->rearrangePublishAlert($objArray);
+        }catch (\Exception $ex)
+        {
+            return array();
+        }
+    }
+
+    protected function getAlert($entry)
+    {
+        try
+        {
+            $objArray = $this->entityManager->getRepository("model\\entities\\PublishAlerts")->findBy(array("entry" => $entry));
+            if(is_array($objArray) && sizeof($objArray) > 0)
+            {
+                return $objArray[0];
+            }
+            return null;
         }catch (\Exception $ex)
         {
             return array();
@@ -248,6 +368,56 @@ class DoctrineDAO extends BlogDAO{
                 $result[] = array(
                     "id" => $category->getId(),
                     "category" => $category->getCategory(),
+                );
+            }
+        }
+
+        return $result;
+    }
+
+    protected function rearrangeBlogEntry($blogEntryEntityArray)
+    {
+        $result = array();
+
+        if(is_array($blogEntryEntityArray) && sizeof($blogEntryEntityArray) > 0)
+        {
+            foreach($blogEntryEntityArray as $entry)
+            {
+                $result[] = array(
+                    "id" => $entry->getId(),
+                    "entry_id" => $entry->getEntryId(),
+                    "title" => $entry->getEntryTitle(),
+                    "cover" => $entry->getEntryCover(),
+                    "author" => $entry->getEntryAuthor(),
+                    "entry" => $entry->getEntry(),
+                    "category_id" => $entry->getEntryCategory()->getId(),
+                    "category" => $entry->getEntryCategory()->getCategory(),
+                    "status" => $entry->getStatus(),
+                    "date_created" => $entry->getDateCreated()->format('g:ia \o\n l jS F Y'),
+                );
+            }
+        }
+
+        return $result;
+    }
+
+    protected function rearrangePublishAlert($publishEntityArray)
+    {
+        $result = array();
+
+        if(is_array($publishEntityArray) && sizeof($publishEntityArray) > 0)
+        {
+            foreach($publishEntityArray as $publish)
+            {
+                $result[] = array(
+                    "id" => $publish->getId(),
+                    "title" => $publish->getEntry()->getEntryTitle(),
+                    "entry_id" => $publish->getEntry()->getId(),
+                    "entryId" => $publish->getEntry()->getEntryId(),
+                    "category" => $publish->getEntry()->getEntryCategory()->getCategory(),
+                    "author" => $publish->getEntry()->getId(),
+                    "date_created" => $publish->getEntry()->getDateCreated()->format('g:ia \o\n l jS F Y'),
+                    "status" => $publish->getEntry()->getStatus(),
                 );
             }
         }

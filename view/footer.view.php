@@ -144,6 +144,8 @@
 </script>
 
 
+<script src="view/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
 
 <!--
 Style switcher. This is just for demo purpose only.

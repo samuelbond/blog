@@ -81,6 +81,10 @@ class UserManagerVersion1 extends UserManager implements UserManagerInterface {
         return false;
     }
 
+    /**
+     * @param User $user
+     * @return User
+     */
     public function getUser(User $user)
     {
         if($user->getUserId() !== null)

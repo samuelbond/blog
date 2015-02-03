@@ -22,14 +22,18 @@ class BlogVersion1 extends Blog implements BlogInterface{
        return $this->dao->insertNewBlogEntry($entry);
     }
 
+    /**
+     * @param BlogEntry $entry
+     * @return BlogEntry
+     */
     public function getBlogEntry(BlogEntry $entry)
     {
-        // TODO: Implement getBlogEntry() method.
+        return $this->dao->getBlogEntry($entry->getId());
     }
 
     public function editBlogEntry(BlogEntry $entry)
     {
-        // TODO: Implement editBlogEntry() method.
+        return $this->dao->modifyBlogEntry($entry);
     }
 
     public function commentOnBlogEntry(BlogComment $comment, BlogEntry $entry)
@@ -60,6 +64,21 @@ class BlogVersion1 extends Blog implements BlogInterface{
     public function getAllBlogEntries()
     {
         // TODO: Implement getAllBlogEntries() method.
+    }
+
+    public function getAuthorsBlogEntries($author)
+    {
+        return $this->dao->getAllBlogEntriesBelongingToAuthor($author);
+    }
+
+    public function getAllBlogEntryAwaitingPublish()
+    {
+        return $this->dao->getAllBlogToPublish();
+    }
+
+    public function createANewPublishRequest(BlogEntry $blogEntry)
+    {
+        return $this->dao->insertPublishRequest($blogEntry);
     }
 
 

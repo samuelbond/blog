@@ -57,38 +57,60 @@
 											<table class="table table-bordered">
 												<!-- Table Header -->
 												<thead>
-													<tr>
-														<th>Title</th>
-														<th>Date Created</th>
-														<th>Published Status</th>
-													</tr>
-												</thead>
-												<!-- Table Body -->
-												<tbody>
-													<tr>
-														<td><a href="#">Why Static Variables</a></td>
-														<td>1 February 2015</td>
-														<td>Not Published</td>
-													</tr>
-													<tr>
-                                                        <td><a href="#">How to get the best from Doctrine</a></td>
-                                                        <td>1 February 2015</td>
-                                                        <td>Published</td>
-													</tr>
-												</tbody>
+                                                <tr>
+                                                    <th>Title</th>
+                                                    <th>Category</th>
+                                                    <th>Status</th>
+                                                    <th>Date Created</th>
+                                                    <th></th>
+                                                </tr>
+                                                </thead>
+                                                <!-- Table Body -->
+                                                <tbody>
+
+                                                <?php
+
+                                                foreach($myblog as $blog)
+                                                {
+                                                    echo '
+                                            <tr>
+                                                <td>'.$blog['title'].'</td>
+                                                <td>'.$blog['category'].'</td>
+                                                <td>'.(($blog['status'] == 0) ? "Not Published" : (($blog['status'] == 2) ? "Deleted" : "Published")).'</td>
+                                                <td>'.$blog['date_created'].'</td>
+                                                <td>
+                                                <a href="editblog?edit='.$blog['id'].'" data-toggle="tooltip" title="Edit"><span class="fa fa-edit color"></span></a>
+                                                <br />
+                                                <a href="myblog?publish='.$blog['id'].'" data-toggle="tooltip" title="Publish"><span class="fa fa-print color"></span></a>
+                                                <br />
+                                                <a href="#" data-toggle="tooltip" title="Delete"><span class="fa fa-remove color"></span></a>
+                                                </td>
+                                            </tr>';
+                                                }
+                                                ?>
+                                                </tbody>
 											</table>
 										</div>
 																				
 										<!-- Pagination -->
 										<div class="shopping-pagination">
 											<ul class="pagination">
-												<li class="disabled"><a href="#">&laquo;</a></li>
-												<li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
-												<li><a href="#">2</a></li>
-												<li><a href="#">3</a></li>
-												<li><a href="#">4</a></li>
-												<li><a href="#">5</a></li>
-												<li><a href="#">&raquo;</a></li>
+												<?php
+                                                for($k = 1; $k < $totalPages; $k++)
+                                                {
+                                                    if($currentPage === $k)
+                                                    {
+                                                        echo '<li class="active">
+                                                        <a href="#">'.$k.' <span class="sr-only">(current)</span></a></li>';
+                                                    }
+                                                    else
+                                                    {
+                                                        echo '<li><a href="profile?page='.$k.'">'.$k.'</a></li>';
+                                                    }
+
+                                                }
+                                                ?>
+
 											</ul>
 										</div>
 										<!-- Pagination end-->
@@ -110,6 +132,7 @@
                                         <li><a href="manageprofile">Manage Profile</a></li>
 										<li><a href="manageusers">Manage Users</a></li>
 										<li><a href="myblog">My Blog</a></li>
+                                        <li><a href="publishblog">Publish Alerts</a></li>
 									</ul>
 
 									</div>

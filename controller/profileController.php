@@ -10,13 +10,16 @@ namespace controller;
 
 
 use application\BaseController;
+use application\Paginator;
 use application\Template;
+use component\blog\Blog;
+use component\blog\BlogInjector;
 use component\usermanager\User;
 use component\usermanager\UserManager;
 use component\usermanager\UserManagerInjector;
-
 class profileController extends BaseController{
 
+    use Paginator;
     public function index()
     {
         $currentAction = "MANAGE_PROFILE";
@@ -28,6 +31,8 @@ class profileController extends BaseController{
             $user = new User();
             $user->setUserId($userManager->getCurrentSessionUserId());
             $profile = $userManager->getUser($user);
+            $blogInjector = new BlogInjector();
+            $blog = (new Blog())->getInstance($blogInjector);
 
             if($userManager->isUserAllowedToPerformAction($currentAction, $profile) === false)
             {
@@ -40,6 +45,11 @@ class profileController extends BaseController{
             {
                 $profile->useDefaultProfilePicture();
             }
+            $myblog = $blog->getAuthorsBlogEntries($user->getUserId());;
+            $currentPage = ((isset($_GET['page'])) ? $_GET['page'] : 1);
+            $this->registry->template->myblog = $this->pagination($myblog, $currentPage);
+            $this->registry->template->totalPages = $this->getNumberOfTotalPages();
+            $this->registry->template->currentPage = $currentPage;
             $this->registry->template->profile = $profile;
             $this->registry->template->loadView("profile");
             return;

@@ -32,6 +32,7 @@
 
     <!-- Custom CSS. Type your CSS code in custom.css file -->
     <link href="view/css/custom.css" rel="stylesheet">
+    <link rel="stylesheet" href="view/styles/monokai_sublime.css">
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="#">

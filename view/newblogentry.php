@@ -130,6 +130,7 @@
                             <li><a href="manageprofile">Manage Profile</a></li>
                             <li><a href="manageusers">Manage Users</a></li>
                             <li><a href="myblog">My Blog</a></li>
+                            <li><a href="publishblog">Publish Alerts</a></li>
                         </ul>
 
                     </div>
@@ -155,6 +156,6 @@
     // instance, using default configuration.
     CKEDITOR.replace( 'blogentry', {
         extraPlugins: 'codesnippet',
-        codeSnippet_theme: 'github'
+        codeSnippet_theme: 'monokai_sublime'
     });
 </script>
