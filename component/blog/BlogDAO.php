@@ -47,9 +47,10 @@ abstract class BlogDAO extends AbstractDAO{
     /**
      * Gets a blog entry
      * @param $blogEntryId
+     * @param bool $useAsEntryId
      * @return BlogEntry|null
      */
-    public abstract function getBlogEntry($blogEntryId);
+    public abstract function getBlogEntry($blogEntryId, $useAsEntryId = false);
 
     /**
      * Modifies a given blog entry

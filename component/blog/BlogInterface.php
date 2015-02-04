@@ -15,6 +15,8 @@ interface BlogInterface {
 
     public function getBlogEntry(BlogEntry $entry);
 
+    public function getBlogEntryWithEntryId(BlogEntry $entry);
+
     public function editBlogEntry(BlogEntry $entry);
 
     public function commentOnBlogEntry(BlogComment $comment, BlogEntry $entry);

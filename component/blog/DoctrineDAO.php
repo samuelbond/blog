@@ -88,18 +88,30 @@ class DoctrineDAO extends BlogDAO{
     /**
      * Gets a blog entry
      * @param $blogEntryId
+     * @param bool $useAsEntryId
      * @return BlogEntry|null
      */
-    public function getBlogEntry($blogEntryId)
+    public function getBlogEntry($blogEntryId, $useAsEntryId = false)
     {
         try
         {
-            $result = $this->entityManager->find("model\\entities\\BlogEntry", $blogEntryId);
+            $default = "view".DIRECTORY_SEPARATOR."blog-covers".DIRECTORY_SEPARATOR."default.png";
+
+            if($useAsEntryId === false)
+            {
+                $result = $this->entityManager->find("model\\entities\\BlogEntry", $blogEntryId);
+            }
+            else
+            {
+                $result = $this->entityManager->getRepository("model\\entities\\BlogEntry")->findBy(array("entryId" => $blogEntryId));
+                $result = $result[0];
+            }
+
             $entry = new BlogEntry();
             $entry->setEntryId($result->getEntryId());
             $entry->setId($result->getId());
             $entry->setEntry($result->getEntry());
-            $entry->setEntryCover($result->getEntryCover());
+            $entry->setEntryCover(((is_null($entry->getEntryCover()) || strlen($entry->getEntryCover()) < 5)  ? $default : $entry->getEntryCover()));
             $entry->setEntryTitle($result->getEntryTitle());
             $entry->setEntryAuthor($result->getEntryAuthor());
             $entry->setEntryCategory($result->getEntryCategory());
@@ -404,6 +416,7 @@ class DoctrineDAO extends BlogDAO{
     protected function rearrangeBlogEntry($blogEntryEntityArray)
     {
         $result = array();
+        $default = "view".DIRECTORY_SEPARATOR."blog-covers".DIRECTORY_SEPARATOR."default.png";
 
         if(is_array($blogEntryEntityArray) && sizeof($blogEntryEntityArray) > 0)
         {
@@ -413,7 +426,7 @@ class DoctrineDAO extends BlogDAO{
                     "id" => $entry->getId(),
                     "entry_id" => $entry->getEntryId(),
                     "title" => $entry->getEntryTitle(),
-                    "cover" => $entry->getEntryCover(),
+                    "cover" => ((is_null($entry->getEntryCover()) || strlen($entry->getEntryCover()) < 5)  ? $default : $entry->getEntryCover()),
                     "author" => $entry->getEntryAuthor(),
                     "entry" => $entry->getEntry(),
                     "category_id" => $entry->getEntryCategory()->getId(),

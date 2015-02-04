@@ -23,6 +23,7 @@ class indexController extends BaseController{
         $blog = (new Blog())->getInstance($blogInjector);
         $allBlog = $blog->getAllBlogEntries();
         $currentPage = ((isset($_GET['page'])) ? $_GET['page'] : 1);
+        $this->setMaxResultPerPage(9);
         $this->registry->template->allBlog = $this->pagination($allBlog, $currentPage);
         $this->registry->template->totalPages = $this->getNumberOfTotalPages();
         $this->registry->template->currentPage = $currentPage;

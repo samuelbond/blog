@@ -28,7 +28,7 @@ trait Paginator {
         $this->sizeOfItems = ((is_null($this->sizeOfItems)) ? 0 : ($this->sizeOfItems+1));
         if($this->sizeOfItems !== 0)
         {
-            $num = ceil($this->sizeOfItems/$this->maxResultPerPage);
+            $num = round(($this->sizeOfItems/$this->maxResultPerPage));
 
             return $num;
         }

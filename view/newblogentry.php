@@ -79,6 +79,9 @@
                             <br />
                             <div class="block-heading-two">
                                 <h3><span>New Blog Entry</span></h3>
+                                <small style="color:red;">* All Blog entries must first start with a text that is more than 200 characters, so as to ensure your entry is published</small>
+                                <br />
+                                <small style="color:red;">* Your Blog Entry will not be published if it contains less than 200 characters in the starting text</small>
                             </div>
 
                             <form method="post" action="newblogentry" enctype="multipart/form-data">

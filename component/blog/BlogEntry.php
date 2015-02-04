@@ -181,6 +181,9 @@ class BlogEntry {
         return $this->id;
     }
 
-
+    public function useDefaultCover()
+    {
+        $this->entryCover = "view".DIRECTORY_SEPARATOR."blog-covers".DIRECTORY_SEPARATOR."default.png";
+    }
 
 } 

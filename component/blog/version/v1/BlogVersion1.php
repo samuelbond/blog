@@ -31,6 +31,12 @@ class BlogVersion1 extends Blog implements BlogInterface{
         return $this->dao->getBlogEntry($entry->getId());
     }
 
+    public function getBlogEntryWithEntryId(BlogEntry $entry)
+    {
+        return $this->dao->getBlogEntry($entry->getEntryId(), true);
+    }
+
+
     public function editBlogEntry(BlogEntry $entry)
     {
         return $this->dao->modifyBlogEntry($entry);

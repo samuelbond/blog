@@ -70,6 +70,9 @@ class Template {
     public function loadView($viewName, $useHeaderAndFooter = true)
     {
         $viewFile = $this->path.$viewName.".php";
+        $appName = explode("/", $_SERVER['REQUEST_URI']);
+        $viewPath = "http://$_SERVER[HTTP_HOST]/".$appName[1]."/view/";
+
 
         try
         {

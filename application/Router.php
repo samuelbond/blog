@@ -24,6 +24,7 @@ class Router {
     private $controller;
     private $action;
     public $clClass;
+    private $arguments = null;
 
     /**
      * @param $registry
@@ -84,7 +85,15 @@ class Router {
             $controllerAction = $this->action;
         }
 
-        $controllerClass->$controllerAction();
+        if(is_null($this->arguments))
+        {
+            $controllerClass->$controllerAction();
+        }
+        else
+        {
+            $controllerClass->$controllerAction($this->arguments);
+        }
+
     }
 
     /**
@@ -101,6 +110,10 @@ class Router {
             if(isset($routeArray[1]))
             {
                 $this->action = $routeArray[1];
+                if(isset($routeArray[2]))
+                {
+                    $this->arguments = $routeArray[2];
+                }
             }
         }
 
