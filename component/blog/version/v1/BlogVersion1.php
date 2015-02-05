@@ -44,7 +44,7 @@ class BlogVersion1 extends Blog implements BlogInterface{
 
     public function commentOnBlogEntry(BlogComment $comment, BlogEntry $entry)
     {
-        // TODO: Implement commentOnBlogEntry() method.
+        return $this->dao->addCommentForBlogEntry($entry, $comment);
     }
 
     public function publishBlogEntry(BlogEntry $entry)
@@ -54,7 +54,7 @@ class BlogVersion1 extends Blog implements BlogInterface{
 
     public function publishComment(BlogComment $comment)
     {
-        // TODO: Implement publishComment() method.
+        return $this->dao->publishBlogEntryComment($comment);
     }
 
     public function createNewCategory(BlogCategory $category)
@@ -87,5 +87,25 @@ class BlogVersion1 extends Blog implements BlogInterface{
         return $this->dao->insertPublishRequest($blogEntry);
     }
 
+    public function getAllCommentAwaitingPublish($author)
+    {
+        return $this->dao->getAllCommentToPublish($author);
+    }
 
-} 
+    public function getAllCommentsForThisBlogEntry(BlogEntry $blogEntry)
+    {
+        return $this->dao->getBlogComments($blogEntry->getId());
+    }
+
+    public function getComment(BlogComment $comment)
+    {
+        return $this->dao->getComment($comment->getCommentId());
+    }
+
+    public function getBlogEntryInCategory($categoryId)
+    {
+        return $this->dao->getEntryInCategory($categoryId);
+    }
+
+
+}

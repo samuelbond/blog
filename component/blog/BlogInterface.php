@@ -35,7 +35,15 @@ interface BlogInterface {
 
     public function getAllBlogEntryAwaitingPublish();
 
+    public function getAllCommentAwaitingPublish($author);
+
     public function createANewPublishRequest(BlogEntry $blogEntry);
+
+    public function getAllCommentsForThisBlogEntry(BlogEntry $blogEntry);
+
+    public function getComment(BlogComment $comment);
+
+    public function getBlogEntryInCategory($categoryId);
 
 
 

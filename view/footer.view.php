@@ -8,7 +8,7 @@
                 <!-- Foot Item -->
                 <div class="foot-item">
                     <!-- Heading -->
-                    <h5 class="bold"><i class="fa fa-user"></i>&nbsp;&nbsp;About</h5>
+                    <h5 class="bold"><i class="fa fa-user"></i>&nbsp;&nbsp;Team Hire Blog</h5>
                     <p>Itaque earum rerum hic tenetur a atque atatum dele niti atque tenetur a atque atatum tenetur volup tatum.</p>
                     <div class="brand-bg">
                         <!-- Social Media Icons -->
@@ -33,24 +33,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 col-sm-6">
-                <!-- Foot Item -->
-                <div class="foot-item">
-                    <!-- Heading -->
-                    <h5 class="bold"><i class="fa fa-comments"></i>&nbsp;&nbsp;Recent Posts</h5>
-                    <!-- Foot Item Content -->
-                    <div class="foot-item-content">
-                        <ul class="list-unstyled">
-                            <!-- Link -->
-                            <li><a href="#">Denocing Sapientes Contain</a></li>
-                            <li><a href="#">Dignissim Electronic Typeset</a></li>
-                            <li><a href="#">Laborum Desktop Publishing</a></li>
-                            <li><a href="#">Quibus PageMaker Including</a></li>
-                            <li><a href="#">Denocing Sapientes Contain</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+
             <div class="col-md-3 col-sm-6">
                 <!-- Foot Item -->
                 <div class="foot-item">
@@ -61,8 +44,10 @@
                         <!-- Heading -->
                         <h6 class="bold"><i class="fa fa-home"></i>&nbsp;&nbsp;Team Hire</h6>
                         <!-- Paragraph -->
+                        <!--
                         <p class="add">
                             London, United Kingdom</p>
+                            -->
                         <p class="tel"> <i class="fa fa-phone"></i> Tel : + (07) - 818 210052<br />
                             <i class="fa fa-envelope"></i>  Mail : <a href="#">info@teamhire.co.uk</a><br />
                     </div>

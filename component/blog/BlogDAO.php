@@ -133,5 +133,20 @@ abstract class BlogDAO extends AbstractDAO{
      */
     public abstract function insertPublishRequest(BlogEntry $blogEntry);
 
+    /**
+     * Gets all comment to be publish
+     * @param $author
+     * @return array
+     */
+    public abstract function getAllCommentToPublish($author);
+
+
+    /**
+     * Gets blog comments
+     * @param $blogId
+     * @return array
+     */
+    public abstract function getBlogComments($blogId);
+
 
 } 

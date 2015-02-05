@@ -36,17 +36,56 @@ $author = $reader->getUserDetail($entry->getEntryAuthor());
         <!-- blog two Content -->
         <div class="blog-two-content">
             <!-- Heading -->
-            <h3><a href="blog-single.html"><?php echo $entry->getEntryTitle(); ?></a></h3>
+            <h3><?php echo $entry->getEntryTitle(); ?></h3>
             <!-- Blog meta -->
             <div class="blog-meta">
                 <!-- Date -->
-                <a href="#"><i class="fa fa-calendar"></i> &nbsp; <?php echo $entry->getEntryDate(); ?></a> &nbsp;
+                <i class="fa fa-calendar"></i> &nbsp; <?php echo $entry->getEntryDate(); ?> &nbsp;
                 <!-- Author -->
-                <a href="#"><i class="fa fa-user"></i> &nbsp; <?php echo $author->getFullName(); ?></a> &nbsp;
+                <i class="fa fa-user"></i> &nbsp; <?php echo $author->getFullName(); ?>&nbsp;
                 <!-- Comments -->
-                <a href="#"><i class="fa fa-comments"></i> &nbsp; 6 Comments</a>
+               <i class="fa fa-comments"></i> &nbsp; <?php echo $totalComments; ?> Comments
             </div>
 
+            <?php
+            if(isset($error))
+            {
+                echo '<div class="row">
+                <div class="col-md-6 col-md-push-3">
+                    <div class="alert alert-danger alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <strong>Error!</strong> '.$error.'.
+                    </div>
+                </div>
+                </div>';
+            }
+
+            if(isset($success))
+            {
+                echo '<div class="row">
+                <div class="col-md-6 col-md-push-3">
+                    <div class="alert alert-success alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <strong>Success!</strong> '.$success.'.
+                    </div>
+                </div>
+                </div>';
+            }
+
+
+            if(isset($message))
+            {
+                echo '<div class="row">
+                <div class="col-md-6 col-md-push-3">
+                    <div class="alert alert-info alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <strong>Heads up!</strong> '.$message.'.
+                    </div>
+                </div>
+                </div>';
+            }
+
+            ?>
             <!-- Image -->
             <img src="<?php echo $entry->getEntryCover(); ?>" alt="" class="img-responsive img-thumbnail">
 
@@ -86,61 +125,51 @@ $author = $reader->getUserDetail($entry->getEntryAuthor());
 
     <!-- Comments section -->
     <div class="blog-comments">
-        <h4><i class="fa fa-comments color"></i>&nbsp; 6 Comments</h4>
+        <h4><i class="fa fa-comments color"></i>&nbsp; <?php echo $totalComments; ?></h4>
         <hr />
 
         <!-- Blog comment item -->
+
+
+        <?php
+
+        foreach($comments as $comment)
+        {
+            echo '
         <div class="blog-comment-item">
             <div class="comment-author-image">
-                <a href="#"><img src="img/user/1.jpg" alt="" class="img-responsive img-thumbnail" /></a>
+                <a href="#"><img src="view/profile-pictures/default.png" alt="" class="img-responsive img-thumbnail" /></a>
             </div>
             <div class="comment-details">
                 <!-- Name -->
-                <h5><a href="#">Frank Thomas</a> <small>08/08/2013</small></h5>
+                <h5>'.$comment['commenter'].' <small>'.$comment['date_created'].'</small></h5>
                 <!-- Paragraph -->
-                <p>Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae.</p>
+                '.$comment['comment'].'
             </div>
-        </div>
+        </div>';
+        }
 
-        <!-- Blog comment item -->
-        <div class="blog-comment-item">
-            <div class="comment-author-image">
-                <a href="#"><img src="img/user/2.jpg" alt="" class="img-responsive img-thumbnail" /></a>
-            </div>
-            <div class="comment-details">
-                <!-- Name -->
-                <h5><a href="#">Bob Marley</a> <small>08/08/2013</small></h5>
-                <!-- Paragraph -->
-                <p>Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et m et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae.</p>
-            </div>
-        </div>
+        ?>
 
-        <!-- Blog comment item -->
-        <div class="blog-comment-item comment-reply">
-            <div class="comment-author-image">
-                <a href="#"><img src="img/user/3.jpg" alt="" class="img-responsive img-thumbnail" /></a>
-            </div>
-            <div class="comment-details">
-                <!-- Name -->
-                <h5><a href="#">James Brown</a> <small>08/08/2013</small></h5>
-                <!-- Paragraph -->
-                <p>Debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae.</p>
-            </div>
-        </div>
+        <div class="shopping-pagination">
+            <ul class="pagination">
+                <?php
+                for($k = 1; $k < $totalPages; $k++)
+                {
+                    if($currentPage === $k)
+                    {
+                        echo '<li class="active"><a href="#">'.$k.' <span class="sr-only">(current)</span></a></li>';
+                    }
+                    else
+                    {
+                        echo '<li><a href="blog/entry/'.$entry->getEntryId().'?page='.$k.'">'.$k.'</a></li>';
+                    }
 
-        <!-- Blog comment item -->
-        <div class="blog-comment-item">
-            <div class="comment-author-image">
-                <a href="#"><img src="img/user/4.jpg" alt="" class="img-responsive img-thumbnail" /></a>
-            </div>
-            <div class="comment-details">
-                <!-- Name -->
-                <h5><a href="#">Jockey Rambo</a> <small>08/08/2013</small></h5>
-                <!-- Paragraph -->
-                <p>Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptatesdiandae sint et molestiae non recusandae.</p>
-            </div>
-        </div>
+                }
+                ?>
 
+            </ul>
+        </div>
 
     </div>
 
@@ -151,38 +180,30 @@ $author = $reader->getUserDetail($entry->getEntryAuthor());
         <!-- Heading -->
         <h4><i class="fa fa-comments color"></i>&nbsp; Post Comment</h4><!-- Form -->
         <hr />
-        <form class="form" role="form">
+        <form class="form" role="form" method="post" action="blog">
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Enter Name">
+                        <input type="text" name="fname" class="form-control" placeholder="Enter Name" required="required">
                     </div>
                 </div>
+                <input type="hidden" name="entry_id" value="<?php echo $entry->getId(); ?>" />
+                <input type="hidden" name="blog_id" value="<?php echo $entry->getEntryId(); ?>" />
                 <div class="col-md-4">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Enter Email">
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Enter Website">
+                        <input type="email" name="email" class="form-control" placeholder="Enter Email" required="required">
                     </div>
                 </div>
             </div>
             <div class="form-group">
-                <textarea class="form-control" rows="7" placeholder="Enter Message"></textarea>
+                <textarea class="form-control" name="comment" rows="7" placeholder="Enter Message" required="required"></textarea>
             </div>
             <!-- Button -->
-            <button type="button" class="btn btn-color">Submit</button>&nbsp;
+            <button type="submit" class="btn btn-color">Submit</button>&nbsp;
             <button type="button" class="btn btn-white">Reset</button>
         </form>
     </div>
 
-    <!-- Pager -->
-    <ul class="pager">
-        <li class="previous"><a href="#">&larr; Older</a></li>
-        <li class="next"><a href="#">Newer &rarr;</a></li>
-    </ul>
 
 </div>
 
@@ -219,7 +240,7 @@ $author = $reader->getUserDetail($entry->getEntryAuthor());
 
                     foreach($categories as $category)
                     {
-                        echo '<li><a href="#">'.$category['category'].'</a></li>';
+                        echo '<li><a href="blog/category/'.$category['id'].'">'.$category['category'].'</a></li>';
                     }
                     ?>
 
@@ -230,8 +251,8 @@ $author = $reader->getUserDetail($entry->getEntryAuthor());
 
         <!-- Tag Widget -->
         <div class="s-widget">
+            <!--
             <h5><i class="fa fa-tags color"></i>&nbsp; Tags</h5>
-            <!-- Widgets Content -->
             <div class="widget-content">
                 <a href="#" class="label label-color">web</a>
                 <a href="#" class="label label-color">wordpress</a>
@@ -248,6 +269,7 @@ $author = $reader->getUserDetail($entry->getEntryAuthor());
                 <a href="#" class="label label-color">personal</a>
                 <a href="#" class="label label-color">general</a>
             </div>
+            -->
         </div>
 
     </div>

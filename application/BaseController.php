@@ -18,7 +18,10 @@ Abstract class BaseController {
 
     protected $registry;
 
+    protected $arguments;
+
     protected $pageTitle = "Welcome";
+
 
     /**
      * @param $registry

@@ -12,6 +12,7 @@ namespace component\blog;
 use application\Template;
 use component\blog\BlogEntry;
 use model\entities\BlogEntryCategory;
+use model\entities\BlogEntryComment;
 use model\entities\PublishAlerts;
 
 class DoctrineDAO extends BlogDAO{
@@ -111,7 +112,7 @@ class DoctrineDAO extends BlogDAO{
             $entry->setEntryId($result->getEntryId());
             $entry->setId($result->getId());
             $entry->setEntry($result->getEntry());
-            $entry->setEntryCover(((is_null($entry->getEntryCover()) || strlen($entry->getEntryCover()) < 5)  ? $default : $entry->getEntryCover()));
+            $entry->setEntryCover(((is_null($result->getEntryCover()) || strlen($result->getEntryCover()) < 5)  ? $default : $result->getEntryCover()));
             $entry->setEntryTitle($result->getEntryTitle());
             $entry->setEntryAuthor($result->getEntryAuthor());
             $entry->setEntryCategory($result->getEntryCategory());
@@ -164,7 +165,24 @@ class DoctrineDAO extends BlogDAO{
      */
     public function addCommentForBlogEntry(BlogEntry $blogEntry, BlogComment $blogComment)
     {
-        // TODO: Implement addCommentForBlogEntry() method.
+         $this->getBlogEntry($blogEntry->getId());
+
+        try
+        {
+            $comment = new BlogEntryComment();
+            $comment->setComment($blogComment->getComment());
+            $comment->setEntry($this->currentEntity);
+            $comment->setCommentorName($blogComment->getCommentAuthor());
+            $comment->setCommentorEmail($blogComment->getCommentAuthorEmail());
+            $comment->setDateCreated(new \DateTime());
+            $this->entityManager->persist($comment);
+            $this->entityManager->flush();
+            return true;
+        }catch (\Exception $ex)
+        {
+            return false;
+        }
+
     }
 
     /**
@@ -191,7 +209,16 @@ class DoctrineDAO extends BlogDAO{
      */
     public function getEntryInCategory($entryCategory)
     {
-        // TODO: Implement getEntryInCategory() method.
+        try
+        {
+            $query = $this->entityManager->createQuery("SELECT u, p FROM model\\entities\\BlogEntry u JOIN u.entryCategory p  WHERE u.status = 1 AND p.id = ".$entryCategory);
+            $objArray = $query->getResult();
+            return $this->rearrangeBlogEntry($objArray);
+        }catch (\Exception $ex)
+        {
+            echo "exception ; ".$ex->getMessage();
+            return array();
+        }
     }
 
     /**
@@ -211,7 +238,43 @@ class DoctrineDAO extends BlogDAO{
      */
     public function publishBlogEntryComment(BlogComment $blogComment)
     {
-        // TODO: Implement publishBlogEntryComment() method.
+        $this->getComment($blogComment->getCommentId());
+        $comment = $this->currentEntity;
+
+        try
+        {
+            $comment->setStatus($blogComment->getStatus());
+            $this->entityManager->merge($comment);
+            $this->entityManager->flush();
+            return true;
+        }
+        catch(\Exception $ex)
+        {
+            return false;
+        }
+    }
+
+    public function getComment($commentId)
+    {
+        try
+        {
+            $comment = $this->entityManager->find("model\\entities\\BlogEntryComment", $commentId);
+            $blogComment = new BlogComment();
+            $blogComment->setStatus($comment->getStatus());
+            $blogComment->setComment($comment->getComment());
+            $blogComment->setCommentId($comment->getId());
+            $blogComment->setBlogEntryId($comment->getEntry()->getId());
+            $blogComment->setCommentAuthor($comment->getCommentorName());
+            $blogComment->setCommentAuthorEmail($comment->getCommentorEmail());
+            $blogComment->setDateCreated($comment->getDateCreated()->format('l jS F Y'));
+            $blogComment->setBlogEntry($comment->getEntry());
+            $this->currentEntity = $comment;
+            return $blogComment;
+        }catch (\Exception $ex)
+        {
+            echo $ex->getMessage();
+            return null;
+        }
     }
 
     /**
@@ -356,6 +419,43 @@ class DoctrineDAO extends BlogDAO{
         }
     }
 
+    /**
+     * Gets all comment to be publish
+     * @param $author
+     * @return array
+     */
+    public function getAllCommentToPublish($author)
+    {
+        try
+        {
+            $query = $this->entityManager->createQuery("SELECT u, p FROM model\\entities\\BlogEntryComment u JOIN u.entry p  WHERE u.status = 0 AND p.entryAuthor = ".$author);
+            $objArray = $query->getResult();
+            return $this->rearrangeToPublishComment($objArray);
+        }catch (\Exception $ex)
+        {
+            return array();
+        }
+    }
+
+    /**
+     * Gets blog comments
+     * @param $blogId
+     * @return array
+     */
+    public function getBlogComments($blogId)
+    {
+        try
+        {
+            $query = $this->entityManager->createQuery("SELECT u, p FROM model\\entities\\BlogEntryComment u JOIN u.entry p  WHERE u.status = 1 AND p.id = ".$blogId);
+            $objArray = $query->getResult();
+            return $this->rearrangeToPublishComment($objArray);
+        }catch (\Exception $ex)
+        {
+            return array();
+        }
+    }
+
+
     protected function getAlert($entry)
     {
         try
@@ -417,7 +517,6 @@ class DoctrineDAO extends BlogDAO{
     {
         $result = array();
         $default = "view".DIRECTORY_SEPARATOR."blog-covers".DIRECTORY_SEPARATOR."default.png";
-
         if(is_array($blogEntryEntityArray) && sizeof($blogEntryEntityArray) > 0)
         {
             foreach($blogEntryEntityArray as $entry)
@@ -426,7 +525,7 @@ class DoctrineDAO extends BlogDAO{
                     "id" => $entry->getId(),
                     "entry_id" => $entry->getEntryId(),
                     "title" => $entry->getEntryTitle(),
-                    "cover" => ((is_null($entry->getEntryCover()) || strlen($entry->getEntryCover()) < 5)  ? $default : $entry->getEntryCover()),
+                    "cover" => ((is_null($entry->getEntryCover()) || strlen($entry->getEntryCover()) < 5) ? $default : $entry->getEntryCover()),
                     "author" => $entry->getEntryAuthor(),
                     "entry" => $entry->getEntry(),
                     "category_id" => $entry->getEntryCategory()->getId(),
@@ -436,7 +535,6 @@ class DoctrineDAO extends BlogDAO{
                 );
             }
         }
-
         return $result;
     }
 
@@ -454,7 +552,7 @@ class DoctrineDAO extends BlogDAO{
                     "entry_id" => $publish->getEntry()->getId(),
                     "entryId" => $publish->getEntry()->getEntryId(),
                     "category" => $publish->getEntry()->getEntryCategory()->getCategory(),
-                    "author" => $publish->getEntry()->getId(),
+                    "author" => $publish->getEntry()->getEntryAuthor(),
                     "date_created" => $publish->getEntry()->getDateCreated()->format('g:ia \o\n l jS F Y'),
                     "status" => $publish->getEntry()->getStatus(),
                 );
@@ -463,5 +561,36 @@ class DoctrineDAO extends BlogDAO{
 
         return $result;
     }
+
+
+    protected function rearrangeToPublishComment($publishEntityArray)
+    {
+        $result = array();
+
+        if(is_array($publishEntityArray) && sizeof($publishEntityArray) > 0)
+        {
+            foreach($publishEntityArray as $publish)
+            {
+                $result[] = array(
+                    "id" => $publish->getId(),
+                    "title" => $publish->getEntry()->getEntryTitle(),
+                    "entry_id" => $publish->getEntry()->getId(),
+                    "entryId" => $publish->getEntry()->getEntryId(),
+                    "category" => $publish->getEntry()->getEntryCategory()->getCategory(),
+                    "author" => $publish->getEntry()->getEntryAuthor(),
+                    "commenter" => $publish->getCommentorName(),
+                    "commenter_email" => $publish->getCommentorEmail(),
+                    "comment" => $publish->getComment(),
+                    "date_created" => $publish->getDateCreated()->format('g:ia \o\n l jS F Y'),
+                    "status" => $publish->getStatus(),
+                );
+            }
+        }
+
+        return $result;
+    }
+
+
+
 
 } 

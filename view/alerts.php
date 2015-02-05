@@ -102,7 +102,7 @@
                                         $author = $publishBlog->getUserDetail($alert['author']);
                                         echo '
                                             <tr>
-                                                <td><a href="reader?entry='.$alert['entry_id'].'">'.$alert['title'].'</a></td>
+                                                <td><a href="reader?entry='.$alert['entry_id'].'" target="_blank">'.$alert['title'].'</a></td>
                                                 <td>'.$alert['category'].'</td>
                                                 <td>'.((is_array($author) && sizeof($author) > 0) ? $author['name'] : "Unknown").'</td>
                                                 <td>'.(($alert['status'] == 0) ? "Not Published" : (($alert['status'] == 2) ? "Deleted" : "Published")).'</td>
@@ -160,6 +160,7 @@
                             <li><a href="manageusers">Manage Users</a></li>
                             <li><a href="myblog">My Blog</a></li>
                             <li><a href="publishblog">Publish Alerts</a></li>
+                            <li><a href="publishcomment">Blog Comments</a></li>
                         </ul>
 
                     </div>

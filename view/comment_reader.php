@@ -2,6 +2,10 @@
 /**
  * @var \component\usermanager\User $profile
  */
+
+/**
+ * @var \component\blog\BlogComment $comment
+ */
 ?>
 <!-- Main content starts -->
 
@@ -29,7 +33,7 @@
                     <!-- Shopping items content -->
                     <div class="shopping-content">
                         <!-- Block Title -->
-                        <h4><i class="fa fa-lock color"></i>&nbsp; Opps Something Happened&nbsp;</h4>
+                        <h4><i class="fa fa-lock color"></i>&nbsp; Read Comment by <?php echo $comment->getCommentAuthor();?></h4>
                         <hr />
                         <?php
 
@@ -71,11 +75,18 @@
                         }
 
                         ?>
+                        <p>
+                            <?php
 
+                            echo $comment->getComment();
+
+                            ?>
+                        </p>
                     </div>
                 </div>
 
                 <div class="col-md-3 col-sm-4 col-md-pull-9 col-sm-pull-8">
+
 
                     <!-- Shopping Sidebar -->
                     <div class="sidebar">

@@ -39,7 +39,7 @@
 								<!-- Grid entry information -->
 								<div class="entry-info">
 									<!-- Heading -->
-									<h4><a href="#">'.$blog['title'].'</a></h4>
+									<h4><a href="blog/entry/'.$blog['entry_id'].'">'.$blog['title'].'</a></h4>
 									<div class="bor"></div>
 									<!-- Paragraph -->
 									'.substr($blog['entry'], 0, 51).'...

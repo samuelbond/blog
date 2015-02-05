@@ -8,7 +8,7 @@
     <meta name="description" content="Your description">
     <meta name="keywords" content="Your,Keywords">
     <meta name="author" content="ResponsiveWebInc">
-
+    <base href="http://localhost/blog2/"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Styles -->

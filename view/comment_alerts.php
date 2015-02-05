@@ -4,8 +4,6 @@
  */
 ?>
 
-<script src="view/ckeditor/ckeditor.js"></script>
-
 <!-- Main content starts -->
 
 <div class="main-block">
@@ -78,43 +76,72 @@
 
                             <br />
                             <div class="block-heading-two">
-                                <h3><span>New Blog Entry</span></h3>
-                                <small style="color:red;">* All Blog entries must first start with a text that is more than 200 characters, so as to ensure your entry is published</small>
-                                <br />
-                                <small style="color:red;">* Your Blog Entry will not be published if it contains less than 200 characters in the starting text</small>
+                                <h3><span>All Publish Request</span></h3>
                             </div>
 
-                            <form method="post" action="newblogentry" enctype="multipart/form-data">
-                                <div class="rptable table-responsive">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Blog Entry Title</label>
-                                        <input type="text" name="title" class="form-control" id="exampleInputEmail1" placeholder="Blog Entry Title">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputProfilePicture">Blog Entry Cover Picture</label>
-                                        <input type="file" name="cover" id="exampleInputProfilePicture">
-                                    </div>
+                            <div class="rptable table-responsive">
+                                <table class="table table-bordered">
+                                    <!-- Table Header -->
+                                    <thead>
+                                    <tr>
+                                        <th>Blog Entry Title</th>
+                                        <th>Category</th>
+                                        <th>Commenter Name</th>
+                                        <th>Commenter Email</th>
+                                        <th>Comment Status</th>
+                                        <th>Date Created</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <!-- Table Body -->
+                                    <tbody>
 
-                                    <div class="form-group">
-                                        <label for="exampleInputProfilePicture">Blog Entry Category</label>
-                                        <select class="form-control" name="category">
-                                            <?php
-                                                foreach($categories as $category)
-                                                {
-                                                    echo '<option value="'.$category['id'].'">'.$category['category'].'</option>';
-                                                }
-                                            ?>
-                                        </select>
-                                    </div>
+                                    <?php
 
-                                    <div class="form-group">
-                                        <label for="blogentry">Blog Entry</label>
-                                        <textarea class="form-control" name="entry" id="blogentry" ></textarea>
-                                    </div>
+                                    foreach($alerts as $alert)
+                                    {
+                                        echo '
+                                            <tr>
+                                                <td><a href="publishcomment?read_comment='.$alert['id'].'" target="_blank">'.$alert['title'].'</a></td>
+                                                <td>'.$alert['category'].'</td>
+                                                <td>'.$alert['commenter'].'</td>
+                                                <td>'.$alert['commenter_email'].'</td>
+                                                <td>'.(($alert['status'] == 0) ? "Not Published" : (($alert['status'] == 2) ? "Deleted" : "Published")).'</td>
+                                                <td>'.$alert['date_created'].'</td>
+                                                <td>
+                                                <a href="publishcomment?publish='.$alert['id'].'" data-toggle="tooltip" title="Publish"><span class="fa fa-print color"></span></a>
+                                                <br />
+                                                <a href="publishcomment?remove='.$alert['id'].'" data-toggle="tooltip" title="Delete"><span class="fa fa-remove color"></span></a>
+                                                </td>
+                                            </tr>';
+                                    }
+                                    ?>
+                                    </tbody>
+                                </table>
+                            </div>
 
-                                </div>
-                                    <button type="submit" class="btn btn-primary">Save changes</button>
-                            </form>
+                            <!-- Pagination -->
+                            <div class="shopping-pagination">
+                                <ul class="pagination">
+                                    <?php
+                                    for($k = 1; $k < $totalPages; $k++)
+                                    {
+                                        if($currentPage === $k)
+                                        {
+                                            echo '<li class="active">
+                                                        <a href="#">'.$k.' <span class="sr-only">(current)</span></a></li>';
+                                        }
+                                        else
+                                        {
+                                            echo '<li><a href="myblog?page='.$k.'">'.$k.'</a></li>';
+                                        }
+
+                                    }
+                                    ?>
+
+                                </ul>
+                            </div>
+                            <!-- Pagination end-->
 
                         </div>
                     </div>
@@ -151,15 +178,3 @@
 </div>
 <!-- Main content ends -->
 
-
-
-
-
-<script>
-    // Replace the <textarea id="editor1"> with a CKEditor
-    // instance, using default configuration.
-    CKEDITOR.replace( 'blogentry', {
-        extraPlugins: 'codesnippet',
-        codeSnippet_theme: 'monokai_sublime'
-    });
-</script>
