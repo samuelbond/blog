@@ -19,7 +19,7 @@ use component\usermanager\User;
 use component\usermanager\UserManager;
 use component\usermanager\UserManagerInjector;
 
-class publishblogController extends BaseController{
+class publishblogController extends UserRelatedController{
 
     use Paginator;
     public function index()
@@ -42,6 +42,33 @@ class publishblogController extends BaseController{
                 $this->actionIsNotAllowed();
                 $this->registry->template->loadView("content");
                 return false;
+            }
+
+            if(isset($_POST['message']))
+            {
+                $message = $_POST['message'];
+                $entryId = $_POST['entryId'];
+                $newEntry = new BlogEntry();
+                $newEntry->setId($entryId);
+                $entryBlog = $blog->getBlogEntry($newEntry);
+                $user = new User();
+                $user->setUserId($entryBlog->getEntryAuthor());
+
+                $us = $userManager->getUser($user);
+                $headers = "From: Team Hire <info@teamhire.co.uk> \r\n";
+                $headers .= "Reply-To: Team Hire <info@teamhire.co.uk> \r\n";
+                $headers .= "MIME-Version: 1.0\r\n";
+                $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+                $mail = mail($us->getEmail(), "Notification From Team Hire Editor", $message, $headers);
+
+                if($mail === true)
+                {
+                    $this->registry->template->success = "Message has been sent to author";
+                }
+                else
+                {
+                    $this->registry->template->error = "Failed to send message author";
+                }
             }
 
             if(isset($_GET['publish']))

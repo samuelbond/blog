@@ -18,7 +18,7 @@ use component\usermanager\UserManager;
 use component\usermanager\UserManagerInjector;
 use finfo;
 
-class newblogentryController extends BaseController{
+class newblogentryController extends UserRelatedController{
 
     private $uploadedImage;
 

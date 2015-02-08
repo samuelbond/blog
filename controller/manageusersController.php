@@ -14,7 +14,7 @@ use component\usermanager\User;
 use component\usermanager\UserManager;
 use component\usermanager\UserManagerInjector;
 
-class manageusersController extends BaseController{
+class manageusersController extends UserRelatedController{
 
     public function index()
     {

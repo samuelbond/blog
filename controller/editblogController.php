@@ -18,7 +18,7 @@ use component\usermanager\User;
 use component\usermanager\UserManager;
 use component\usermanager\UserManagerInjector;
 
-class editblogController extends BaseController {
+class editblogController extends UserRelatedController {
 
     public function index()
     {

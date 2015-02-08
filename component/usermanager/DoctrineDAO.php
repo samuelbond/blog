@@ -96,7 +96,7 @@ class DoctrineDAO extends UserManagerDAO{
 
         if($user->getStatus() !== null)
         {
-            $userEntity->setStatus($user->getStatus());
+            $userEntity->setUserStatus($user->getStatus());
         }
 
         try
@@ -142,6 +142,7 @@ class DoctrineDAO extends UserManagerDAO{
                 $user->setUserId($obj->getUserId());
                 $user->setUserType($obj->getUserType()->getUserRole());
                 $user->setPassword($obj->getPassword());
+                $user->setStatus($obj->getUserStatus());
                 $this->currentEntity = $obj;
             }
 
@@ -233,7 +234,7 @@ class DoctrineDAO extends UserManagerDAO{
                     "fullname" => $userEntity->getFullname(),
                     "userid" => $userEntity->getUserId(),
                     "email" => $userEntity->getEmail(),
-                    "status" => $userEntity->getStatus(),
+                    "status" => $userEntity->getUserStatus(),
                     "date_created" => $userEntity->getDateCreated()->format('g:ia \o\n l jS F Y'),
                 );
             }

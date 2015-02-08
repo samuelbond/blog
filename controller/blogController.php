@@ -67,7 +67,7 @@ class blogController extends BaseController{
         $blogEntry = new BlogEntry();
         $blogEntry->setEntryId($id);
         $entry = $blog->getBlogEntryWithEntryId($blogEntry);
-        if(is_null($entry) || !is_object($entry))
+        if(is_null($entry) || !is_object($entry) || ( is_object($entry) && intval($entry->getEntryStatus()) !== 1))
         {
             $this->registry->template->error = "The request blog entry was not found, maybe it has been moved or deleted, please check your details and try again";
             $this->registry->template->loadView("info");
@@ -95,6 +95,7 @@ class blogController extends BaseController{
         $this->setPageTitle("Categories");
         $currentPage = ((isset($_GET['page'])) ? $_GET['page'] : 1);
         $entries = $blog->getBlogEntryInCategory($categoryId);
+        $this->registry->template->toptag = "Blog Entries in this category";
         $this->registry->template->allEntries = $this->pagination($entries, $currentPage);
         $this->registry->template->totalPages = $this->getNumberOfTotalPages();
         $this->registry->template->totalResult= count($entries);
@@ -108,7 +109,23 @@ class blogController extends BaseController{
 
     public function search($searchTerm)
     {
+        $blogInjector = new BlogInjector();
+        $blog = (new Blog())->getInstance($blogInjector);
 
+        $this->setPageTitle("Search");
+        $currentPage = ((isset($_GET['page'])) ? $_GET['page'] : 1);
+        $entries = $blog->searchAllBlogEntry($searchTerm);
+        $this->registry->template->toptag = "Searching for `".$searchTerm."`";
+        //$this->registry->template->message = "";
+        $this->registry->template->allEntries = $this->pagination($entries, $currentPage);
+        $this->registry->template->totalPages = $this->getNumberOfTotalPages();
+        $this->registry->template->totalResult= count($entries);
+        $this->registry->template->currentPage = $currentPage;
+        $this->registry->template->searchTerm = $searchTerm;
+        $this->registry->template->categories = $blog->getAllCategories();
+        $this->registry->template->reader = $this;
+        $this->registry->template->loadView("search_view");
+        return true;
     }
 
     public function getUserDetail($userId)

@@ -37,7 +37,7 @@
                         if(isset($error))
                         {
                             echo '<div class="row">
-                <div class="col-md-6 col-md-push-3">
+                <div class="col-md-10 col-md-push-2">
                     <div class="alert alert-danger alert-dismissible" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <strong>Error!</strong> '.$error.'.
@@ -49,7 +49,7 @@
                         if(isset($success))
                         {
                             echo '<div class="row">
-                <div class="col-md-6 col-md-push-3">
+                <div class="col-md-10 col-md-push-2">
                     <div class="alert alert-success alert-dismissible" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <strong>Success!</strong> '.$success.'.
@@ -62,7 +62,7 @@
                         if(isset($message))
                         {
                             echo '<div class="row">
-                <div class="col-md-6 col-md-push-3">
+                <div class="col-md-10 col-md-push-2">
                     <div class="alert alert-info alert-dismissible" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <strong>Heads up!</strong> '.$message.'.
@@ -112,7 +112,7 @@
                                                 <br />
                                                 <a href="myblog?publish='.$blog['id'].'" data-toggle="tooltip" title="Publish"><span class="fa fa-print color"></span></a>
                                                 <br />
-                                                <a href="#" data-toggle="tooltip" title="Delete"><span class="fa fa-remove color"></span></a>
+                                                <a href="myblog?remove='.$blog['id'].'" data-toggle="tooltip" title="Delete"><span class="fa fa-remove color"></span></a>
                                                 </td>
                                             </tr>';
                                         }

@@ -107,5 +107,15 @@ class BlogVersion1 extends Blog implements BlogInterface{
         return $this->dao->getEntryInCategory($categoryId);
     }
 
+    public function searchAllBlogEntry($searchFor)
+    {
+        return $this->dao->searchBlog($searchFor);
+    }
+
+    public function subscribeToBlog($email)
+    {
+        return $this->dao->addNewBlogSubscriber($email);
+    }
+
 
 }

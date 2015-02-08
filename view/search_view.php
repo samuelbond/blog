@@ -8,7 +8,7 @@
 				
 				<div class="page-heading-two">
 					<div class="container">
-						<h2>Blog Two <span>Something goes here</span></h2>
+						<h2><?php if(isset($toptag))echo $toptag; ?></h2>
 
 						<div class="clearfix"></div>
 					</div>
@@ -44,10 +44,17 @@
 
 
                                     <?php
-
-                                    if(sizeof($allEntries) === 0)
+                                    if(isset($message))
+                                    {
+                                        echo $message;
+                                    }
+                                    elseif(sizeof($allEntries) === 0 && isset($currentCategory))
                                     {
                                         echo "No blog entry found in this category";
+                                    }
+                                    elseif(sizeof($allEntries) === 0)
+                                    {
+                                        echo "No blog entry found matching your search term, please rephrase your search term and try again";
                                     }
 
                                     foreach($allEntries as $blogEntry)
@@ -55,7 +62,7 @@
                                         $userData = $reader->getUserDetail($blogEntry['author']);
                                         echo '<div class="blog-two-item">
 									<!-- blog two Img -->
-									<div class="blog-two-img">
+									<div class="blog-two-img col-xs-10 col-md-3">
 										<!-- Image -->
 										<img src="'.$blogEntry['cover'].'" alt="" class="img-responsive img-thumbnail" />
 									</div>
@@ -69,17 +76,15 @@
 											<i class="fa fa-calendar"></i> &nbsp; '.$blogEntry['date_created'].' &nbsp;
 											<!-- Author -->
 											<i class="fa fa-user"></i> &nbsp; '.$userData->getFullName().' &nbsp;
-											<!-- Comments -->
-
+											<!-- Category -->
+                                            <i class="fa fa-folder"></i> &nbsp; '.$blogEntry['category'].' &nbsp;
 										</div>
 										<!-- Paragraph -->
-										'.substr($blogEntry['entry'], 0, 150).' ....
 									</div>
 								</div>';
                                     }
 
                                     ?>
-
                                     <!-- Blog item ends -->
 
 
@@ -97,7 +102,15 @@
                                             }
                                             else
                                             {
-                                                echo '<li><a href="blog/category/'.$currentCategory.'?page='.($k+1).'">'.($k+1).'</a></li>';
+                                                if(isset($currentCategory))
+                                                {
+                                                    echo '<li><a href="blog/category/'.$currentCategory.'?page='.($k+1).'">'.($k+1).'</a></li>';
+                                                }
+                                                elseif(isset($searchTerm))
+                                                {
+                                                    echo '<li><a href="blog/search/'.$searchTerm.'?page='.($k+1).'">'.($k+1).'</a></li>';
+                                                }
+
                                             }
 
                                         }
@@ -119,9 +132,9 @@
 										<div class="widget-content search">
 											<form role="form">
 												<div class="input-group">
-													<input type="text" class="form-control" placeholder="Type Something">
+													<input type="text" class="form-control" placeholder="Type Something" id="searchTerm2">
 													<span class="input-group-btn">
-														<button class="btn btn-color" type="button">Search</button>
+														<button class="btn btn-color" type="button" onclick="sendSearch2()">Search</button>
 													</span>
 												</div>
 											</form>

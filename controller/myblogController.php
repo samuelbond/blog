@@ -20,7 +20,7 @@ use component\usermanager\User;
 use component\usermanager\UserManager;
 use component\usermanager\UserManagerInjector;
 
-class myblogController extends BaseController{
+class myblogController extends UserRelatedController{
 
     use Paginator;
     public function index()
@@ -47,9 +47,9 @@ class myblogController extends BaseController{
 
             $idEntry = 0;
             $selectedBlog = null;
-            if(isset($_GET['publish']))
+            if(isset($_GET['publish']) || isset($_GET['remove']))
             {
-                $idEntry = $_GET['publish'];
+                $idEntry = ((isset($_GET['publish'])) ? $_GET['publish'] : (isset($_GET['remove']) ? $_GET['remove'] : null));
                 $blogEntry = new BlogEntry();
                 $blogEntry->setId($idEntry);
                 $selectedBlog = $blog->getBlogEntry($blogEntry);
@@ -63,7 +63,7 @@ class myblogController extends BaseController{
             }
 
 
-            if($userManager->isUserAllowedToPerformAction($currentAction, $profile) === false ||( isset($_GET['publish']) && $idEntry === 0 || is_object($selectedBlog) && intval($profile->getUserId()) !== intval($selectedBlog->getEntryAuthor())))
+            if($userManager->isUserAllowedToPerformAction($currentAction, $profile) === false ||( (isset($_GET['publish']) || isset($_GET['remove'])) && $idEntry === 0 || is_object($selectedBlog) && intval($profile->getUserId()) !== intval($selectedBlog->getEntryAuthor())))
             {
                 $this->actionIsNotAllowed();
                 $this->registry->template->loadView("content");
@@ -76,13 +76,38 @@ class myblogController extends BaseController{
                 $publishRequest = new BlogEntry();
                 $publishRequest->setId($publish);
 
-                if($blog->createANewPublishRequest($publishRequest))
+                if(intval($selectedBlog->getEntryStatus()) === 1)
+                {
+                    $this->registry->template->error = "Could not create a publish request for your blog entry because it has already been published";
+                }
+                elseif(intval($selectedBlog->getEntryStatus()) === 2)
+                {
+                    $this->registry->template->error = "Could not create a publish request for your blog entry because it has already been deleted";
+                }
+                elseif($blog->createANewPublishRequest($publishRequest))
                 {
                     $this->registry->template->success = "Your publish request has been submitted, your entry will be reviewed by the editor ";
                 }
                 else
                 {
                     $this->registry->template->error = "Could not create a publish request for your blog entry";
+                }
+            }
+
+            if(isset($_GET['remove']))
+            {
+                $remove = $_GET['remove'];
+                $removeRequest = new BlogEntry();
+                $removeRequest->setId($remove);
+                $removeRequest->setEntryStatus(2);
+
+                if($blog->editBlogEntry($removeRequest))
+                {
+                    $this->registry->template->success = "Blog Entry has been deleted";
+                }
+                else
+                {
+                    $this->registry->template->error = "Failed to delete blog entry";
                 }
             }
 

@@ -27,6 +27,14 @@ class DatabaseConfiguration {
             "database"      => "blog",
             "charset"       => "latin1",
         ),
+        "bluehost" => array(
+            "host"          => "localhost",
+            "port"          =>  "3307",
+            "username"      => "teachcon_blog",
+            "password"      => "4ZA)_y-;SwtR",
+            "database"      => "teachcon_blog",
+            "charset"       => "latin1",
+        ),
 
     );
 

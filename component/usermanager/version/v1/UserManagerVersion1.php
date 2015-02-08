@@ -33,7 +33,7 @@ class UserManagerVersion1 extends UserManager implements UserManagerInterface {
     public function loginUser(User $user)
     {
         $userObj = $this->dao->getUser($user);
-        if($userObj === null || is_object($userObj) && $userObj->getPassword() !== $user->getPassword() && $userObj->getEmail() !== $user->getEmail())
+        if($userObj === null || is_object($userObj) && $userObj->getPassword() !== $user->getPassword() && $userObj->getEmail() !== $user->getEmail() )
         {
             return false;
         }

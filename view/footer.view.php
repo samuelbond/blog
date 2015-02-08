@@ -9,7 +9,7 @@
                 <div class="foot-item">
                     <!-- Heading -->
                     <h5 class="bold"><i class="fa fa-user"></i>&nbsp;&nbsp;Team Hire Blog</h5>
-                    <p>Itaque earum rerum hic tenetur a atque atatum dele niti atque tenetur a atque atatum tenetur volup tatum.</p>
+                    <p>Welcome to the Team Hire Blog, we share our thoughts, opinions and experience on various Information Technology topics</p>
                     <div class="brand-bg">
                         <!-- Social Media Icons -->
                         <a href="#" class="facebook"><i class="fa fa-facebook circle-3"></i></a>
@@ -21,12 +21,12 @@
                     <div class="subscribe-box">
                         <h5 class="bold">Subscribe :</h5>
                         <!-- Form -->
-                        <form role="form">
+                        <form role="form" method="post" action="subscribe">
                             <!-- Input Group -->
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Enter Email Id">
+                                <input type="email" name="subscribe" class="form-control" placeholder="Enter Email Id">
 											<span class="input-group-btn">
-												<button class="btn btn-color" type="button">Subscribe</button>
+												<button class="btn btn-color" type="submit">Subscribe</button>
 											</span>
                             </div>
                         </form>
@@ -71,11 +71,7 @@
         <p class="pull-left">Copyright &copy; 2014 - <a href="#">Team Hire</a></p>
         <ul class="list-inline pull-right">
             <!-- List -->
-            <li><a href="index.html">Home</a><li>
-            <li><a href="service.html">Service</a></li>
-            <li><a href="feature.html">Features</a></li>
-            <li><a href="about-us.html">About</a></li>
-            <li><a href="contact-us.html">Contact</a></li>
+            <li><a href="signin">Login</a><li>
         </ul>
         <!-- Clearfix -->
         <div class="clearfix"></div>
@@ -139,6 +135,24 @@
     function postData(attrName,attrValue){
        var input  = $('<input/>',{type:'hidden',name:attrName,value:attrValue});
         $('#form').append(input).submit();
+    }
+
+    function sendSearch()
+    {
+        var term = document.getElementById("searchTerm1").value;
+        window.location.href = 'blog/search/'+term;
+    }
+
+    function sendSearch2()
+    {
+        var term = document.getElementById("searchTerm2").value;
+        window.location.href = 'blog/search/'+term;
+    }
+
+    function contactAuthor(entryId)
+    {
+        var elem = document.getElementById("entryId");
+        elem.value = entryId;
     }
 </script>
 

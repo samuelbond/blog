@@ -70,6 +70,7 @@ class publishcommentController extends BaseController{
                 $commentId = $_GET['remove'];
                 $comment = new BlogComment();
                 $comment->setCommentId($commentId);
+                $comment->setStatus(2);
 
                 if($blog->publishComment($comment))
                 {

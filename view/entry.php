@@ -16,7 +16,7 @@ $author = $reader->getUserDetail($entry->getEntryAuthor());
 
 <div class="page-heading-two">
     <div class="container">
-        <h2>Blog Single <span>Something goes here</span></h2>
+        <h2><a href="index"><i class="fa fa-home"></i></a> &nbsp;  /  <a><?php echo $entry->getEntryTitle(); ?></a></h2>
         <div class="clearfix"></div>
     </div>
 </div>
@@ -220,9 +220,9 @@ $author = $reader->getUserDetail($entry->getEntryAuthor());
             <div class="widget-content search">
                 <form role="form">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Type Something">
+                        <input type="text" class="form-control" placeholder="Type Something" id="searchTerm2">
 													<span class="input-group-btn">
-														<button class="btn btn-color" type="button">Search</button>
+														<button class="btn btn-color" type="button" onclick="sendSearch2()">Search</button>
 													</span>
                     </div>
                 </form>

@@ -16,7 +16,7 @@
 				
 				<div class="page-heading-two">
 					<div class="container">
-						<h2>Blog Single <span>Something goes here</span></h2>
+						<h2>View Blog Entry </h2>
 						<div class="clearfix"></div>
 					</div>
 				</div>
@@ -70,121 +70,8 @@
 									</span>
 								</div>
 								
-								<!-- Author section -->
-								<div class="blog-author well">
-									<!-- Author image -->
-									<div class="blog-author-img">
-										<a href="#"><img src="<?php echo $author->getProfilePicture(); ?>" alt="" class="img-responsive img-thumbnail" /></a>
-									</div>
-									<!-- Author details -->
-									<div class="blog-author-content">
-										<h5><a href="#"><?php echo $author->getFullName(); ?></a></h5>
-                                        <?php echo $author->getProfile(); ?>
-									</div>
-									<div class="clearfix"></div>
-								</div>
-								
-								<!-- Comments section -->
-								<div class="blog-comments">
-									<h4><i class="fa fa-comments color"></i>&nbsp; 6 Comments</h4>
-									<hr />
-									
-									<!-- Blog comment item -->
-									<div class="blog-comment-item">
-										<div class="comment-author-image">
-											<a href="#"><img src="img/user/1.jpg" alt="" class="img-responsive img-thumbnail" /></a>
-										</div>
-										<div class="comment-details">
-											<!-- Name -->
-											<h5><a href="#">Frank Thomas</a> <small>08/08/2013</small></h5>
-											<!-- Paragraph -->
-											<p>Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae.</p>
-										</div>
-									</div>
-									
-									<!-- Blog comment item -->
-									<div class="blog-comment-item">
-										<div class="comment-author-image">
-											<a href="#"><img src="img/user/2.jpg" alt="" class="img-responsive img-thumbnail" /></a>
-										</div>
-										<div class="comment-details">
-											<!-- Name -->
-											<h5><a href="#">Bob Marley</a> <small>08/08/2013</small></h5>
-											<!-- Paragraph -->
-											<p>Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et m et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae.</p>
-										</div>
-									</div>
 
-									<!-- Blog comment item -->
-									<div class="blog-comment-item comment-reply">
-										<div class="comment-author-image">
-											<a href="#"><img src="img/user/3.jpg" alt="" class="img-responsive img-thumbnail" /></a>
-										</div>
-										<div class="comment-details">
-											<!-- Name -->
-											<h5><a href="#">James Brown</a> <small>08/08/2013</small></h5>
-											<!-- Paragraph -->
-											<p>Debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae.</p>
-										</div>
-									</div>
 
-									<!-- Blog comment item -->
-									<div class="blog-comment-item">
-										<div class="comment-author-image">
-											<a href="#"><img src="img/user/4.jpg" alt="" class="img-responsive img-thumbnail" /></a>
-										</div>
-										<div class="comment-details">
-											<!-- Name -->
-											<h5><a href="#">Jockey Rambo</a> <small>08/08/2013</small></h5>
-											<!-- Paragraph -->
-											<p>Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptatesdiandae sint et molestiae non recusandae.</p>
-										</div>
-									</div>									
-									
-									
-								</div>
-								
-								<br />
-								
-								<!-- Comment Form -->
-								<div class="well">
-									<!-- Heading -->
-									<h4><i class="fa fa-comments color"></i>&nbsp; Post Comment</h4><!-- Form -->
-									<hr />
-									<form class="form" role="form">
-										<div class="row">
-											<div class="col-md-4">
-												<div class="form-group">
-													<input type="text" class="form-control" placeholder="Enter Name">
-												</div>
-											</div>
-											<div class="col-md-4">
-												<div class="form-group">
-													<input type="text" class="form-control" placeholder="Enter Email">
-												</div>
-											</div>
-											<div class="col-md-4">
-												<div class="form-group">
-													<input type="text" class="form-control" placeholder="Enter Website">
-												</div>
-											</div>
-										</div>
-										<div class="form-group">
-											<textarea class="form-control" rows="7" placeholder="Enter Message"></textarea>
-										</div>
-										<!-- Button -->
-										<button type="button" class="btn btn-color">Submit</button>&nbsp;
-										<button type="button" class="btn btn-white">Reset</button>
-									</form>
-								</div>
-								
-								<!-- Pager -->
-								<ul class="pager">
-									<li class="previous"><a href="#">&larr; Older</a></li>
-									<li class="next"><a href="#">Newer &rarr;</a></li>
-								</ul>
-								
-							</div>
 							
 							<!-- Sidebar column -->
 							<div class="col-md-4">
@@ -199,9 +86,9 @@
 										<div class="widget-content search">
 											<form role="form">
 												<div class="input-group">
-													<input type="text" class="form-control" placeholder="Type Something">
+                                                    <input type="text" class="form-control" placeholder="Type Something" id="searchTerm2">
 													<span class="input-group-btn">
-														<button class="btn btn-color" type="button">Search</button>
+														<button class="btn btn-color" type="button" onclick="sendSearch2()">Search</button>
 													</span>
 												</div>
 											</form>
@@ -228,28 +115,6 @@
 									</div>
 									
 
-									<!-- Tag Widget -->
-									<div class="s-widget">
-										<h5><i class="fa fa-tags color"></i>&nbsp; Tags</h5>
-										<!-- Widgets Content -->
-										<div class="widget-content">
-											<a href="#" class="label label-color">web</a> 
-											<a href="#" class="label label-color">wordpress</a> 
-											<a href="#" class="label label-color">php</a> 
-											<a href="#" class="label label-color">jquery</a> 
-											<a href="#" class="label label-color">java</a> 
-											<a href="#" class="label label-color">photoshop</a> 
-											<a href="#" class="label label-color">windows</a> 
-											<a href="#" class="label label-color">android</a> 
-											<a href="#" class="label label-color">ios</a> 
-											<a href="#" class="label label-color">chrome</a> 
-											<a href="#" class="label label-color">development</a> 
-											<a href="#" class="label label-color">plugin</a> 
-											<a href="#" class="label label-color">personal</a> 
-											<a href="#" class="label label-color">general</a> 
-										</div>
-									</div>
-									
 								</div>
 							</div>
 						</div>

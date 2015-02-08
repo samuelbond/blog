@@ -19,6 +19,8 @@ class signinController extends BaseController{
 
     public function index()
     {
+        $injector = new UserManagerInjector();
+        $userManager = (new UserManager())->getInstance($injector);
         $email = ((isset($_POST['email'])) ? $_POST['email'] : null);
         $password = ((isset($_POST['password'])) ? $_POST['password'] : null);
 
@@ -28,9 +30,7 @@ class signinController extends BaseController{
         }
         elseif(!empty($email) && !is_null($email) && !is_null($password) && !empty($password))
         {
-            $injector = new UserManagerInjector();
 
-            $userManager = (new UserManager())->getInstance($injector);
             $user = new User();
             $user->setEmail($email);
             $user->setPassword($password);
@@ -43,10 +43,30 @@ class signinController extends BaseController{
             }
             else
             {
-                header("Location: profile");
-                return;
+                $user = new User();
+                $user->setUserId($userManager->getCurrentSessionUserId());
+                $u = $userManager->getUser($user);
             }
+
+            if(is_object($u) && intval($u->getStatus()) === 0)
+            {
+                $this->registry->template->error = "Your Account has not been activated yet, please contact your system administrator";
+            }
+            elseif(!is_object($u))
+            {
+                $this->registry->template->error = "Invalid details, wrong email or password";
+            }
+            else
+            {
+                header("Location: profile");
+                return true;
+            }
+
+            $this->registry->template->loadView("signin", false);
+            return false;
         }
+
+
 
         if(isset($_GET['logout']))
         {
@@ -62,11 +82,18 @@ class signinController extends BaseController{
             }
         }
 
+        if($userManager->isUserLoggedIn())
+        {
+            header("Location: profile");
+            return true;
+        }
+
         if(isset($_GET['profile']))
         {
             $this->registry->template->error = "you have to be logged in to access this part";
         }
 
         $this->registry->template->loadView("signin", false);
+        return false;
     }
-} 
+}

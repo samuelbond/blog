@@ -148,5 +148,18 @@ abstract class BlogDAO extends AbstractDAO{
      */
     public abstract function getBlogComments($blogId);
 
+    /**
+     * Search for a given term in all blog entries
+     * @param $searchTerm
+     * @return mixed
+     */
+    public abstract function searchBlog($searchTerm);
+
+    /**
+     * @param $email
+     * @return mixed
+     */
+    public abstract function addNewBlogSubscriber($email);
+
 
 } 

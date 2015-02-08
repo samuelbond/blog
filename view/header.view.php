@@ -8,7 +8,7 @@
     <meta name="description" content="Your description">
     <meta name="keywords" content="Your,Keywords">
     <meta name="author" content="ResponsiveWebInc">
-    <base href="http://localhost/blog2/"/>
+    <base href="http://localhost/blog/"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Styles -->
@@ -51,21 +51,27 @@
     <div class="container">
         <!-- Shopping kart ends -->
 
-        <div class="tb-language dropdown pull-right">
+        <?php
+            if(isset($showProfileBar))
+            {
+                echo '<div class="tb-language dropdown pull-right">
             <a href="#" data-target="#" data-toggle="dropdown"><i class="fa fa-lock"></i> Profile <i class="fa fa-angle-down color"></i></a>
             <!-- Dropdown menu with languages -->
             <ul class="dropdown-menu dropdown-mini" role="menu">
                 <li><a href="profile">My Profile</a></li>
                 <li><a href="signin?logout=true">Sign out</a></li>
             </ul>
-        </div>
+        </div>';
+            }
+        ?>
+
 
         <!-- Langauge starts -->
         <div class="tb-language dropdown pull-right">
             <a href="#" data-target="#" data-toggle="dropdown"><i class="fa fa-globe"></i> English <i class="fa fa-angle-down color"></i></a>
             <!-- Dropdown menu with languages -->
             <ul class="dropdown-menu dropdown-mini" role="menu">
-                <li><a href="#">English</a></li>
+                <li><a >English</a></li>
             </ul>
         </div>
         <!-- Language ends -->
@@ -74,12 +80,12 @@
         <div class="tb-search pull-left">
             <a href="#" class="b-dropdown"><i class="fa fa-search square-2 rounded-1 bg-color white"></i></a>
             <div class="b-dropdown-block">
-                <form role="form">
+                <form role="form" method="get" action="blog/search">
                     <!-- Input Group -->
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Type Something">
+                        <input type="text" class="form-control"  placeholder="Type Something">
 									<span class="input-group-btn">
-										<button class="btn btn-color" type="button">Search</button>
+										<button class="btn btn-color" type="button" onclick="sendSearch()">Search</button>
 									</span>
                     </div>
                 </form>
@@ -133,9 +139,9 @@
             <form role="form">
                 <!-- Input Group -->
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Type Something">
+                    <input type="text" class="form-control" placeholder="Type Something"  id="searchTerm1" value="">
 											<span class="input-group-btn">
-												<button class="btn btn-color" type="button">Search</button>
+												<button class="btn btn-color" type="button" onclick="sendSearch()">Search</button>
 											</span>
                 </div>
             </form>

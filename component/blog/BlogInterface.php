@@ -45,6 +45,10 @@ interface BlogInterface {
 
     public function getBlogEntryInCategory($categoryId);
 
+    public function searchAllBlogEntry($searchFor);
+
+    public function subscribeToBlog($email);
+
 
 
 } 

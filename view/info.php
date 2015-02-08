@@ -29,26 +29,27 @@
                     <!-- Shopping items content -->
                     <div class="shopping-content">
                         <!-- Block Title -->
-                        <h4><i class="fa fa-lock color"></i>&nbsp; Opps Something Happened&nbsp;</h4>
+                        <h4><i class="fa fa-lock color"></i>&nbsp; <?php if(isset($headTitle))echo $headTitle;else echo "Opps Something Happened"; ?>&nbsp;</h4>
                         <hr />
                         <?php
 
                         if(isset($error))
                         {
-                            echo '<div class="row">
-                <div class="col-md-9">
-                    <div class="alert alert-danger alert-dismissible" role="alert">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <strong>Error!</strong> '.$error.'.
-                    </div>
-                </div>
-                </div>';
+                            echo '
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <div class="alert alert-danger alert-dismissible" role="alert">
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <strong>Error!</strong> '.$error.'.
+                                    </div>
+                                </div>
+                            </div>';
                         }
 
                         if(isset($success))
                         {
                             echo '<div class="row">
-                <div class="col-md-9 col-md-push-3">
+                <div class="col-md-9">
                     <div class="alert alert-success alert-dismissible" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <strong>Success!</strong> '.$success.'.
@@ -80,11 +81,12 @@
 
         </div>
         <br />
-
+        <br />
 
     </div>
 </div>
 </div>
+
 
 <!-- Main content ends -->
 

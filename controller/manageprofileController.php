@@ -16,7 +16,7 @@ use component\usermanager\UserManager;
 use component\usermanager\UserManagerInjector;
 use finfo;
 
-class manageprofileController extends BaseController{
+class manageprofileController extends UserRelatedController{
 
     private $uploadedImage = null;
 

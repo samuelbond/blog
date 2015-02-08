@@ -110,6 +110,8 @@
                                                 <td>
                                                 <a href="publishblog?publish='.$alert['entry_id'].'" data-toggle="tooltip" title="Publish"><span class="fa fa-print color"></span></a>
                                                 <br />
+                                                 <a href="#" onclick="contactAuthor(\''.$alert['entry_id'].'\')" data-toggle="modal" data-target="#myModal" data-toggle="tooltip" title="Contact Author"><span class="fa fa-mail-forward color"></span></a>
+                                                 <br />
                                                 <a href="remove?publish='.$alert['entry_id'].'" data-toggle="tooltip" title="Delete"><span class="fa fa-remove color"></span></a>
                                                 </td>
                                             </tr>';
@@ -176,4 +178,36 @@
 </div>
 </div>
 <!-- Main content ends -->
+
+
+<!-- Email Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Contact Author</h4>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="" >
+                    <input type="hidden" name="entryId" value="" id="entryId">
+                    <div class="rptable table-responsive">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Message</label>
+                            <textarea name="message" placeholder="Message Body" class="form-control"></textarea>
+                        </div>
+
+                    </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Send to Author</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 

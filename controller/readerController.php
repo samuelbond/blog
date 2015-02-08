@@ -17,7 +17,7 @@ use component\usermanager\User;
 use component\usermanager\UserManager;
 use component\usermanager\UserManagerInjector;
 
-class readerController extends BaseController{
+class readerController extends UserRelatedController{
     public function index()
     {
         $currentAction = "MANAGE_ALL_BLOG";

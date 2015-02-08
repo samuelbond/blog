@@ -17,7 +17,7 @@ use component\blog\BlogInjector;
 use component\usermanager\User;
 use component\usermanager\UserManager;
 use component\usermanager\UserManagerInjector;
-class profileController extends BaseController{
+class profileController extends UserRelatedController{
 
     use Paginator;
     public function index()

@@ -13,6 +13,7 @@ use application\Template;
 use component\blog\BlogEntry;
 use model\entities\BlogEntryCategory;
 use model\entities\BlogEntryComment;
+use model\entities\BlogSubscribers;
 use model\entities\PublishAlerts;
 
 class DoctrineDAO extends BlogDAO{
@@ -137,8 +138,17 @@ class DoctrineDAO extends BlogDAO{
         $entry = $this->currentEntity;
         try
         {
+            if(!is_object($entry))
+            {
+                return false;
+            }
+
             if(!is_null($blogEntry->getEntryStatus()))
             {
+                if(intval($entry->getStatus()) === intval($blogEntry->getEntryStatus()))
+                {
+                    return false;
+                }
                 $entry->setStatus($blogEntry->getEntryStatus());
             }
             else
@@ -222,6 +232,31 @@ class DoctrineDAO extends BlogDAO{
     }
 
     /**
+     * Search for a given term in all blog entries
+     * @param $searchTerm
+     * @return mixed
+     */
+    public function searchBlog($searchTerm)
+    {
+        try
+        {
+            $query = $this->entityManager->getRepository("model\\entities\\BlogEntry")->createQueryBuilder("b")
+            ->where("b.entryTitle LIKE :title")
+            ->orWhere("b.entry LIKE :bEntry")
+            ->setParameter("title", "%".trim($searchTerm)."%")
+            ->setParameter("bEntry", "%".trim($searchTerm)."%");
+
+            $objArray = $query->getQuery()->getResult();
+            return $this->rearrangeBlogEntry($objArray);
+        }catch (\Exception $ex)
+        {
+            echo "exception ; ".$ex->getMessage();
+            return array();
+        }
+    }
+
+
+    /**
      * Delete a given blog entry
      * @param BlogEntry $blogEntry
      * @return bool
@@ -276,6 +311,27 @@ class DoctrineDAO extends BlogDAO{
             return null;
         }
     }
+
+    /**
+     * @param $email
+     * @return mixed
+     */
+    public function addNewBlogSubscriber($email)
+    {
+        $subscribe = new BlogSubscribers();
+        $subscribe->setEmail($email);
+        $subscribe->setDateCreated(new \DateTime());
+        try
+        {
+            $this->entityManager->persist($subscribe);
+            $this->entityManager->flush();
+            return true;
+        }catch (\Exception $ex)
+        {
+            return false;
+        }
+    }
+
 
     /**
      * Publish a given blog entry
